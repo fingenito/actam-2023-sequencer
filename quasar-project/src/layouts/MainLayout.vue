@@ -1,5 +1,5 @@
 <template>
-  <q-layout>
+  <q-layout view="lHh Lpr lFf">
     <q-page-container>
       <router-view />
 <!--      <body>-->
@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import ParticleCircle from "components/ParticleCircle.vue";
 import * as Tone from 'tone';
 import classNames from "classnames";
 import {defineComponent} from "vue";
