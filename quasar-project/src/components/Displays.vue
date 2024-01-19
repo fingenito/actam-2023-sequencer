@@ -1,8 +1,8 @@
 <template>
   <div class="display-container">
-    <div class="display-content">
+<!--    <div class="display-content">-->
       <slot></slot>
-    </div>
+<!--    </div>-->
   </div>
 </template>
 
@@ -20,7 +20,7 @@ export default {
   margin-top: 30px;
   margin-left: 16px;
   width: 120px; /* Lungo lato */
-  height: 60px; /* Corto lato */
+  height: 50px; /* Corto lato */
   background: linear-gradient(to bottom right, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0.55) 100%), rgb(246, 246, 246);
   align-content: center;
 }

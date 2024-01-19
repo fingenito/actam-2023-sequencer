@@ -1,6 +1,7 @@
 <template>
-  <button class="simple-button" @click="toggleLed">  </button>
-  <div class="led" :class="{ 'led-on': isLedOn }"></div>
+  <button class="simple-button" @click="toggleLed">
+    <div class="led" :class="{ 'led-on': isLedOn }"></div>
+  </button>
 </template>
 
 <script>
@@ -26,8 +27,8 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 15%;
-  width: 15%;
+  height: 30px;
+  width: 30px;
   border-radius: 8px;
   border: 2px solid #090909;
   background-color: transparent;

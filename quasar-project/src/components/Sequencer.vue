@@ -11,19 +11,27 @@
             <div>
               <q-btn class="q-ma-md" @click="toggleButton(rowIndex,colIndex)" :color="button.isActive? 'green': 'grey'" >
               </q-btn>
+<!--              <Buttons1></Buttons1>-->
             </div>
           </div>
           <div>
             <q-btn class="q-ma-md" @click="toggleRow(rowIndex)">
               ON/OFF
             </q-btn>
+<!--            <simple-button></simple-button>-->
           </div>
 
         </div>
 
       </q-card-section>
+
+      <!--Play button -->
       <q-card-section>
-        <q-btn label='play' @click="play"></q-btn>
+<!--        <q-btn label='Play' @click="play"></q-btn>-->
+        <PlayPauseButton
+          @startSeq = "play"
+          @pauseSeq = "pause"
+        />
       </q-card-section>
 
       <q-card-section >
@@ -57,8 +65,15 @@
 import * as Tone from "tone";
 import Sequencer from "components/Sequencer";
 import {defineComponent, onMounted, reactive, ref, watch} from "vue";
+import Buttons1 from "components/Buttons.vue";
+import PlayPauseButton from "components/PlayPauseButton.vue";
+import Displays1 from "components/Displays.vue";
+import Knob1 from "components/Knobs.vue";
+import Sliders1 from "components/Sliders.vue";
+import SimpleButton from "components/SimpleButton.vue";
 export default defineComponent({
   name : 'SequencerComp',
+  components: {SimpleButton, Sliders1, Knob1, Displays1, PlayPauseButton, Buttons1},
   setup(){
     const beat = ref(0)
     const rows = reactive([]);
@@ -104,19 +119,19 @@ export default defineComponent({
       //   row gain to default value
     }
 
-    const play = ()=> {
-      if(!playing.value){
-        console.log('play')
-        configLoop(bpm.value, selectedNoteLength.value, swingValue.value);
-        playing.value = true;
-      }else{
-        Tone.Transport.stop();
-        Tone.Transport.cancel()
-        playing.value = false;
-        beat.value = 0;
-      }
-
+    const play = () => {
+      console.log('play')
+      configLoop(bpm.value, selectedNoteLength.value, swingValue.value);
+      playing.value = true;
     }
+
+    const pause = () => {
+      Tone.Transport.stop();
+      Tone.Transport.cancel()
+      playing.value = false;
+      beat.value = 0;
+    }
+
     const configLoop = (bpm, selectedNoteLength, swingValue)=> {
       const repeat = (time) => {
         Sequencer.createLoop(time, beat.value)
