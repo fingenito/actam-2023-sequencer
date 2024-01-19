@@ -2,9 +2,9 @@
   <div class="slider-container">
     <div class="left-slider-wrapper">
       <q-slider
-        v-model="volumevalue"
-        :min="0"
-        :max="100"
+        v-model="bpmValue"
+        :min="30"
+        :max="300"
         color="grey-9"
         vertical
         reverse
@@ -12,11 +12,13 @@
         class="slider"
       />
     </div>
+
     <div class="right-slider-wrapper">
       <q-slider
-        v-model="standard1"
+        v-model="swingValue"
         :min="0"
-        :max="100"
+        :max="1"
+        :step="0.05"
         color="grey-9"
         vertical
         reverse
@@ -32,13 +34,12 @@ import { ref } from 'vue'
 
 export default {
   name: 'Sliders-1',
-  setup () {
-    return {
-      volumevalue: ref(50),
-      standard1: ref(50)
-    }
+  props: {
+    bpmValue: null,
+    swingValue: null
   }
 }
+
 </script>
 
 <style>

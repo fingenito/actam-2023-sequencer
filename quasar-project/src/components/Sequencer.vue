@@ -3,51 +3,58 @@
       <q-card-section>
         {{beat}}
         <div class="row q-justify-between" v-for="(row,rowIndex) in rows" :key="row.id">
-          <div class="col-1">
-            <q-badge :label="row.instrument"></q-badge>
+
+          <!-- Row labels -->
+          <div class="col-1 flex justify-center">
+            <Displays1 :displayText="row.instrument"/>
           </div>
 
-          <div class="col-1 flex justify-center" v-for="(button,colIndex) in row.buttons" :key="button.id" :style="playing && colIndex === beat ? 'background-color: purple' : ''">
+          <!-- Sequencer buttons -->
+          <div class="col-1 flex justify-center" v-for="(button,colIndex) in row.buttons" :key="button.id" >
             <div>
-              <q-btn class="q-ma-md" @click="toggleButton(rowIndex,colIndex)" :color="button.isActive? 'green': 'grey'" >
-              </q-btn>
-<!--              <Buttons1></Buttons1>-->
+              <Buttons1 class="q-ma-md" @click="toggleButton(rowIndex,colIndex)" :isPlaying="playing && colIndex === beat"></Buttons1>
             </div>
           </div>
-          <div>
-            <q-btn class="q-ma-md" @click="toggleRow(rowIndex)">
-              ON/OFF
-            </q-btn>
-<!--            <simple-button></simple-button>-->
-          </div>
+
+<!--          <div>-->
+<!--            <q-btn class="q-ma-md" @click="toggleRow(rowIndex)">-->
+<!--              ON/OFF-->
+<!--            </q-btn>-->
+<!--&lt;!&ndash;            <simple-button></simple-button>&ndash;&gt;-->
+<!--          </div>-->
 
         </div>
 
       </q-card-section>
 
-      <!--Play button -->
+      <!-- Screen showing BPM and swing values -->
+      <BPMSwing
+        :bpm-value="bpm"
+        :swing-value="Math.floor(swingValue * 100)"
+      />
+
+
+      <!-- Play button -->
       <q-card-section>
-<!--        <q-btn label='Play' @click="play"></q-btn>-->
         <PlayPauseButton
           @startSeq = "play"
           @pauseSeq = "pause"
         />
       </q-card-section>
 
+      <!-- BPM slider -->
       <q-card-section >
-        <q-badge class="q-mr-lg" color="secondary">
-          BPM: {{ bpm }} (30 to 300)
-        </q-badge>
         <q-slider v-model="bpm" :min="30" :max="300" style="width: 250px"/>
       </q-card-section>
 
+      <!-- Swing slider -->
       <q-card-section >
-        <q-badge class="q-mr-lg" color="secondary">
-          Swing: {{ swingValue * 100 + "%" }}
-        </q-badge>
         <q-slider v-model="swingValue" :min="0" :max="1" :step="0.05" style="width: 250px"/>
       </q-card-section>
 
+<!--      <Sliders1 :swing-value="swingValue" :bpm-value="bpm"/>-->
+
+      <!-- Subdivision selection -->
       <q-card-section>
         <q-badge class="q-mr-lg" color="secondary">
           Subdivision
@@ -71,9 +78,10 @@ import Displays1 from "components/Displays.vue";
 import Knob1 from "components/Knobs.vue";
 import Sliders1 from "components/Sliders.vue";
 import SimpleButton from "components/SimpleButton.vue";
+import BPMSwing from "components/BPMSwing.vue";
 export default defineComponent({
   name : 'SequencerComp',
-  components: {SimpleButton, Sliders1, Knob1, Displays1, PlayPauseButton, Buttons1},
+  components: {BPMSwing, SimpleButton, Sliders1, Knob1, Displays1, PlayPauseButton, Buttons1},
   setup(){
     const beat = ref(0)
     const rows = reactive([]);
@@ -149,6 +157,7 @@ export default defineComponent({
       cols,
       bpm,
       play,
+      pause,
       playing,
       toggleButton,
       selectedNoteLength,

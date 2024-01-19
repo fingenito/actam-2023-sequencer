@@ -1,6 +1,7 @@
 <template>
   <div class="button-container">
-    <button @click="toggleLed" :class="{ 'drum_pad': true, 'active': led_status }">
+<!--    'active' should indicate looper index position while playing-->
+    <button @click="toggleLed" :class="{ 'drum_pad': true, 'playing': isPlaying }">
       <div :class="{ 'led-on': led_status, 'led-off': !led_status }"></div>
     </button>
   </div>
@@ -9,6 +10,9 @@
 <script>
 export default {
   name: 'Buttons-1',
+  props: {
+    isPlaying: Boolean
+  },
   data() {
     return {
       led_status: false
@@ -45,7 +49,7 @@ export default {
   transition: box-shadow 0.3s ease, background-color 0.3s ease; /* Aggiunto il trasferimento per un effetto più fluido */
 }
 
-.drum_pad.active {
+.drum_pad.playing {
   box-shadow: 0 0 10px rgb(255, 0, 128); /* Ombra persistente quando attivo */
 }
 

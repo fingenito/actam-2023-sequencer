@@ -1,13 +1,17 @@
 <template>
   <div class="screens-container">
-    <div class="screen1">BPM: 120</div>
-    <div class="screen2">SWING: 10%</div>
+    <div class="screen1">BPM: {{ bpmValue }}</div>
+    <div class="screen2">SWING: {{ swingValue }}%</div>
   </div>
 </template>
 
 <script>
 export default {
   name: 'BPMSwing',
+  props: {
+    bpmValue: null,
+    swingValue: null
+  }
 }
 </script>
 
