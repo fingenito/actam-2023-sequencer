@@ -1,29 +1,40 @@
 <template>
   <div class="sub-container">
-    <div class="green-screen" for="number">{{`sub: ${number}`}}</div>
-    <div class="selector-up" @click="increment"></div>
-    <div class="selector-down" @click="decrement"></div>
+    <div class="green-screen">
+      {{`Kit: ${currentString}`}}
+    </div>
+    <div class="selector-up" @click="cycleForward"></div>
+    <div class="selector-down" @click="cycleBackward"></div>
   </div>
 </template>
 
 <script>
+import Sequencer from "components/Sequencer";
 export default {
   name: 'Subdivision-1',
   data() {
     return {
-      number: 1,
+      currentKitIndex: 0,
+      kits: []
     }
   },
+  computed: {
+    currentString(){
+      return this.kits[this.currentKitIndex]
+    }
+  },
+  async created() {
+    await Sequencer.initSequencer()
+    this.kits = Sequencer.getKits()
+  },
   methods: {
-    increment() {
-      if (this.number < 4) {
-        this.number++
-      }
+    cycleForward() {
+      this.currentKitIndex = (this.currentKitIndex + 1) % this.kits.length
+      Sequencer.loadKit(this.kits[this.currentKitIndex])
     },
-    decrement() {
-      if (this.number > 1) {
-        this.number--
-      }
+    cycleBackward() {
+      this.currentKitIndex = (this.currentKitIndex - 1 + this.kits.length) % this.kits.length
+      Sequencer.loadKit(this.kits[this.currentKitIndex])
     },
   }
 }

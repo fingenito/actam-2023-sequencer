@@ -1,32 +1,32 @@
 <template>
-  <div class="slider-container">
-    <div class="left-slider-wrapper">
-      <q-slider
-        v-model="bpmValue"
-        :min="30"
-        :max="300"
-        color="grey-9"
-        vertical
-        reverse
-        square
-        class="slider"
-      />
-    </div>
+<!--  <div class="slider-container">-->
+<!--    <div class="left-slider-wrapper">-->
+<!--      <q-slider-->
+<!--        v-model="bpmValue"-->
+<!--        :min="30"-->
+<!--        :max="300"-->
+<!--        color="grey-9"-->
+<!--        vertical-->
+<!--        reverse-->
+<!--        square-->
+<!--        class="slider"-->
+<!--      />-->
+<!--    </div>-->
 
-    <div class="right-slider-wrapper">
-      <q-slider
-        v-model="swingValue"
-        :min="0"
-        :max="1"
-        :step="0.05"
-        color="grey-9"
-        vertical
-        reverse
-        square
-        class="slider"
-      />
-    </div>
-  </div>
+<!--    <div class="right-slider-wrapper">-->
+<!--      <q-slider-->
+<!--        v-model="swingValue"-->
+<!--        :min="0"-->
+<!--        :max="1"-->
+<!--        :step="0.05"-->
+<!--        color="grey-9"-->
+<!--        vertical-->
+<!--        reverse-->
+<!--        square-->
+<!--        class="slider"-->
+<!--      />-->
+<!--    </div>-->
+<!--  </div>-->
 </template>
 
 <script>

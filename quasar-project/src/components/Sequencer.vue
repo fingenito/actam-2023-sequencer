@@ -53,7 +53,7 @@
       </q-card-section>
 
 <!--      <Sliders1 :swing-value="swingValue" :bpm-value="bpm"/>-->
-
+      <Subdivision1></Subdivision1>
       <!-- Subdivision selection -->
       <q-card-section>
         <q-badge class="q-mr-lg" color="secondary">
@@ -79,9 +79,10 @@ import Knob1 from "components/Knobs.vue";
 import Sliders1 from "components/Sliders.vue";
 import SimpleButton from "components/SimpleButton.vue";
 import BPMSwing from "components/BPMSwing.vue";
+import Subdivision1 from "components/KitSelection.vue";
 export default defineComponent({
   name : 'SequencerComp',
-  components: {BPMSwing, SimpleButton, Sliders1, Knob1, Displays1, PlayPauseButton, Buttons1},
+  components: {Subdivision1, BPMSwing, SimpleButton, Sliders1, Knob1, Displays1, PlayPauseButton, Buttons1},
   setup(){
     const beat = ref(0)
     const rows = reactive([]);

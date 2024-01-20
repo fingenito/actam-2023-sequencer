@@ -7,9 +7,9 @@ class Sequencer{
   static rows;
   static initSequencer(){
     this.players = new Map();
-    this.kits = ['hiphop','808'];
+    this.kits = ['808', 'hiphop', '8bit'];
     // this.instruments = ['kick','hihat','rim', 'openhat', 'cowbell', 'tom', 'snare', 'clap'];
-    this.instruments = ['kick','hihat','rim', 'openhat'];
+    this.instruments = ['kick','hihat','snare', 'openhat', 'perc'];
     this.rows = this.makeGrid(this.instruments);
     this.loadKit(this.kits[0]);
 
@@ -49,6 +49,10 @@ class Sequencer{
     console.log('getRows',this.rows)
     return this.rows
   }
+  static getKits(){
+    console.log('getKits', this.kits)
+    return this.kits
+  }
   static createLoop(time,beat) {
     this.rows.forEach((row,index) => {
       const instrument = this.players.get(row.instrument)
@@ -59,8 +63,6 @@ class Sequencer{
       }
     })
   };
-
-
 }
 export default Sequencer
 

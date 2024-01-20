@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import Subdivision from 'components/Subdivision.vue';
+import Subdivision from 'components/KitSelection.vue';
 import Buttons from 'components/Buttons.vue';
 import Displays from "components/Displays.vue";
 import Sliders from "components/Sliders.vue";
