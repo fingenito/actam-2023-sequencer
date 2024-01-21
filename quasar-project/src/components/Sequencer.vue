@@ -52,18 +52,15 @@
         <q-slider v-model="swingValue" :min="0" :max="1" :step="0.05" style="width: 250px"/>
       </q-card-section>
 
-<!--      <Sliders1 :swing-value="swingValue" :bpm-value="bpm"/>-->
-      <Subdivision1></Subdivision1>
+      <!-- Sliders for swing and bpm modulation -->
+      <!--<Sliders1 :swing-value="swingValue" :bpm-value="bpm"/>-->
+
+      <!-- Kit selection -->
+      <SelectKit/>
+
       <!-- Subdivision selection -->
       <q-card-section>
-        <q-badge class="q-mr-lg" color="secondary">
-          Subdivision
-        </q-badge>
-        <q-btn-group push>
-          <q-btn :class="{ 'selected-note-length': selectedNoteLength === '4' }" push label="1/4" @click="selectedNoteLength = '4'" />
-          <q-btn :class="{ 'selected-note-length': selectedNoteLength === '8' }" push label="1/8" @click="selectedNoteLength = '8'" />
-          <q-btn :class="{ 'selected-note-length': selectedNoteLength === '16' }" push label="1/16" @click="selectedNoteLength = '16'" />
-        </q-btn-group>
+        <SubdivisionSelection @subdivisionChange="handleSubdivision"/>
       </q-card-section>
     </q-card>
 </template>
@@ -79,10 +76,13 @@ import Knob1 from "components/Knobs.vue";
 import Sliders1 from "components/Sliders.vue";
 import SimpleButton from "components/SimpleButton.vue";
 import BPMSwing from "components/BPMSwing.vue";
-import Subdivision1 from "components/KitSelection.vue";
+import selectKit from "components/KitSelection.vue";
+import SubdivisionSelection from "components/SubdivisionSelection.vue";
 export default defineComponent({
   name : 'SequencerComp',
-  components: {Subdivision1, BPMSwing, SimpleButton, Sliders1, Knob1, Displays1, PlayPauseButton, Buttons1},
+  components: {
+    SubdivisionSelection,
+    selectKit, BPMSwing, SimpleButton, Sliders1, Knob1, Displays1, PlayPauseButton, Buttons1},
   setup(){
     const beat = ref(0)
     const rows = reactive([]);
@@ -142,8 +142,8 @@ export default defineComponent({
     }
 
     const configLoop = (bpm, selectedNoteLength, swingValue)=> {
-      const repeat = (time) => {
-        Sequencer.createLoop(time, beat.value)
+      const repeat = async (time) => {
+        await createLoopAsync(time, beat.value); /* createLoopAsync should be changed back to sequencer.createloop if changes want to be averted */
         beat.value = (beat.value + 1) % 8;
       };
 
@@ -151,7 +151,17 @@ export default defineComponent({
       Tone.Transport.swing = swingValue;
       Tone.Transport.scheduleRepeat(repeat, selectedNoteLength + "n");
       Tone.Transport.start()
+    }
+
+    const createLoopAsync = (time, beatValue) => {
+      return new Promise((resolve, reject) => {
+        Sequencer.createLoop(time, beatValue, () => {
+          resolve();
+        });
+      });
     };
+
+    ;
     return{
       beat,
       rows,
@@ -163,6 +173,11 @@ export default defineComponent({
       toggleButton,
       selectedNoteLength,
       swingValue
+    }
+  },
+  methods: {
+    handleSubdivision(newSubdivision) {
+      this.selectedNoteLength = newSubdivision;
     }
   }
 })

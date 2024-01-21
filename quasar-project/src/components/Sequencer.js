@@ -5,11 +5,12 @@ class Sequencer{
   static kits;
   static instruments;
   static rows;
+  static subdivisions;
   static initSequencer(){
     this.players = new Map();
     this.kits = ['808', 'hiphop', '8bit'];
-    // this.instruments = ['kick','hihat','rim', 'openhat', 'cowbell', 'tom', 'snare', 'clap'];
-    this.instruments = ['kick','hihat','snare', 'openhat', 'perc'];
+    this.instruments = ['kick','hihat','snare', 'openhat', 'perc']; /* Add clap/other sounds? */
+    this.subdivisions = ['4', '8', '16']
     this.rows = this.makeGrid(this.instruments);
     this.loadKit(this.kits[0]);
 
@@ -53,6 +54,16 @@ class Sequencer{
     console.log('getKits', this.kits)
     return this.kits
   }
+  static getSubdivisions(){
+    console.log('getSubdivisions', this.subdivisions)
+    return this.subdivisions
+  }
+
+  static getPlayers(){
+    console.log('getPlayers', this.players)
+    return this.players
+  }
+
   static createLoop(time,beat) {
     this.rows.forEach((row,index) => {
       const instrument = this.players.get(row.instrument)

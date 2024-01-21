@@ -1,7 +1,7 @@
 <template>
   <div class="sub-container">
     <div class="green-screen">
-      {{`Kit: ${currentKit}`}}
+      {{`Subdivision: 1/${currentSubdivision}`}}
     </div>
     <div class="selector-up" @click="cycleForward"></div>
     <div class="selector-down" @click="cycleBackward"></div>
@@ -11,30 +11,30 @@
 <script>
 import Sequencer from "components/Sequencer";
 export default {
-  name: 'selectKit',
+  name: 'SubdivisionSelection',
   data() {
     return {
-      currentKitIndex: 0,
-      kits: []
+      currentSubIndex: 0,
+      subdivisions: []
     }
   },
   computed: {
-    currentKit(){
-      return this.kits[this.currentKitIndex]
+    currentSubdivision(){
+      return this.subdivisions[this.currentSubIndex]
     }
   },
   async created() {
     await Sequencer.initSequencer()
-    this.kits = Sequencer.getKits()
+    this.subdivisions = Sequencer.getSubdivisions()
   },
   methods: {
     cycleForward() {
-      this.currentKitIndex = (this.currentKitIndex + 1) % this.kits.length
-      Sequencer.loadKit(this.kits[this.currentKitIndex])
+      this.currentSubIndex = (this.currentSubIndex + 1) % this.subdivisions.length
+      this.$emit('subdivisionChange', this.subdivisions[this.currentSubIndex])
     },
     cycleBackward() {
-      this.currentKitIndex = (this.currentKitIndex - 1 + this.kits.length) % this.kits.length
-      Sequencer.loadKit(this.kits[this.currentKitIndex])
+      this.currentSubIndex = (this.currentSubIndex - 1 + this.subdivisions.length) % this.subdivisions.length
+      this.$emit('subdivisionChange', this.subdivisions[this.currentSubIndex])
     },
   }
 }
