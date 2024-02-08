@@ -23,7 +23,7 @@ class Sequencer{
     console.log('players',this.players)
 
   }
-   static makeGrid (instruments){
+  static makeGrid (instruments){
     console.log('makeGrid',instruments)
 
     const rows = []
@@ -31,7 +31,7 @@ class Sequencer{
     for (const instr in instruments) {
       console.log('instr',instruments[instr])
       const row = {instrument : instruments[instr],
-                            buttons : []}
+        buttons : []}
       for (let i = 0; i < 8; i++) {
         row.buttons.push({
           id: instruments[instr],
@@ -64,7 +64,7 @@ class Sequencer{
     return this.players
   }
 
-  static createLoop(time,beat) {
+  static createLoop(time, beat) {
     this.rows.forEach((row,index) => {
       const instrument = this.players.get(row.instrument)
       const active = row.buttons[beat].isActive
@@ -74,6 +74,7 @@ class Sequencer{
       }
     })
   };
+
+
 }
 export default Sequencer
-

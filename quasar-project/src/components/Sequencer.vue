@@ -1,68 +1,67 @@
 <template>
-    <q-card class="card">
-      <q-card-section>
-        {{beat}}
-        <div class="row q-justify-between" v-for="(row,rowIndex) in rows" :key="row.id">
+  <q-card class="card">
+    <q-card-section>
+      {{beat}}
+      <div class="row q-justify-between" v-for="(row,rowIndex) in rows" :key="row.id">
 
-          <!-- Row labels -->
-          <div class="col-1 flex justify-center">
-            <Displays1 :displayText="row.instrument"/>
-          </div>
-
-          <!-- Sequencer buttons -->
-          <div class="col-1 flex justify-center" v-for="(button,colIndex) in row.buttons" :key="button.id" >
-            <div>
-              <Buttons1 class="q-ma-md" @click="toggleButton(rowIndex,colIndex)" :isPlaying="playing && colIndex === beat"></Buttons1>
-            </div>
-          </div>
-
-<!--          <div>-->
-<!--            <q-btn class="q-ma-md" @click="toggleRow(rowIndex)">-->
-<!--              ON/OFF-->
-<!--            </q-btn>-->
-<!--&lt;!&ndash;            <simple-button></simple-button>&ndash;&gt;-->
-<!--          </div>-->
-
+        <!-- Row labels -->
+        <div class="col-1 flex justify-center">
+          <Displays1 :displayText="row.instrument"/>
         </div>
 
-      </q-card-section>
+        <!-- Sequencer buttons -->
+        <div class="col-1 flex justify-center" v-for="(button,colIndex) in row.buttons" :key="button.id" >
+          <div>
+            <Buttons1 class="q-ma-md" @click="toggleButton(rowIndex,colIndex)" :isPlaying="playing && colIndex === beat"></Buttons1>
+          </div>
+        </div>
 
-      <!-- Screen showing BPM and swing values -->
-      <BPMSwing
-        :bpm-value="bpm"
-        :swing-value="Math.floor(swingValue * 100)"
-      />
+        <!--          <div>-->
+        <!--            <q-btn class="q-ma-md" @click="toggleRow(rowIndex)">-->
+        <!--              ON/OFF-->
+        <!--            </q-btn>-->
+        <!--&lt;!&ndash;            <simple-button></simple-button>&ndash;&gt;-->
+        <!--          </div>-->
+
+      </div>
+
+    </q-card-section>
+
+    <!-- Screen showing BPM and swing values -->
+    <BPMSwing
+      :bpm-value="bpm"
+      :swing-value="Math.floor(swingValue * 100)"
+    />
 
 
-      <!-- Play button -->
-      <q-card-section>
-        <PlayPauseButton
-          @startSeq = "play"
-          @pauseSeq = "pause"
-        />
-      </q-card-section>
+    <!-- Play button -->
+    <q-card-section>
+      <PlayPauseButton @startSeq = "play" @pauseSeq = "stop" :is-playing="playing"/>
+    </q-card-section>
 
-      <!-- BPM slider -->
-      <q-card-section >
-        <q-slider v-model="bpm" :min="30" :max="300" style="width: 250px"/>
-      </q-card-section>
+    <!-- BPM slider -->
+    <q-card-section >
+      <q-slider v-model="bpm" :min="30" :max="300" style="width: 250px"/>
+    </q-card-section>
 
-      <!-- Swing slider -->
-      <q-card-section >
-        <q-slider v-model="swingValue" :min="0" :max="1" :step="0.05" style="width: 250px"/>
-      </q-card-section>
+    <!-- Swing slider -->
+    <q-card-section >
+      <q-slider v-model="swingValue" :min="0" :max="1" :step="0.05" style="width: 250px"/>
+    </q-card-section>
 
-      <!-- Sliders for swing and bpm modulation -->
-      <!--<Sliders1 :swing-value="swingValue" :bpm-value="bpm"/>-->
+    <!-- Sliders for swing and bpm modulation -->
+    <!--<Sliders1 :swing-value="swingValue" :bpm-value="bpm"/>-->
 
-      <!-- Kit selection -->
-      <SelectKit/>
+    <!-- Kit selection -->
+    <q-card-section>
+      <selectKit :is-playing="playing" @stopLoop="stop"/>
+    </q-card-section>
 
-      <!-- Subdivision selection -->
-      <q-card-section>
-        <SubdivisionSelection @subdivisionChange="handleSubdivision"/>
-      </q-card-section>
-    </q-card>
+    <!-- Subdivision selection -->
+<!--    <q-card-section>-->
+<!--      <SubdivisionSelection @subdivisionChange="handleSubdivision"/>-->
+<!--    </q-card-section>-->
+  </q-card>
 </template>
 
 <script>
@@ -88,9 +87,10 @@ export default defineComponent({
     const rows = reactive([]);
     const cols = ref(8)
     const bpm = ref(120);
-    let playing = ref(false);
+    const playing = ref(false);
     const selectedNoteLength = ref('4');
     const swingValue = ref(0);
+
 
     onMounted(()=>{
       Sequencer.initSequencer()
@@ -134,9 +134,9 @@ export default defineComponent({
       playing.value = true;
     }
 
-    const pause = () => {
+    const stop = () => {
       Tone.Transport.stop();
-      Tone.Transport.cancel()
+      Tone.Transport.cancel();
       playing.value = false;
       beat.value = 0;
     }
@@ -155,20 +155,18 @@ export default defineComponent({
 
     const createLoopAsync = (time, beatValue) => {
       return new Promise((resolve, reject) => {
-        Sequencer.createLoop(time, beatValue, () => {
-          resolve();
-        });
+        Sequencer.createLoop(time, beatValue);
+        resolve();
       });
     };
 
-    ;
     return{
       beat,
       rows,
       cols,
       bpm,
       play,
-      pause,
+      stop,
       playing,
       toggleButton,
       selectedNoteLength,

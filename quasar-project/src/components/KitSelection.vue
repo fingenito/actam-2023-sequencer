@@ -10,6 +10,7 @@
 
 <script>
 import Sequencer from "components/Sequencer";
+import * as Tone from "tone";
 export default {
   name: 'selectKit',
   data() {
@@ -29,13 +30,24 @@ export default {
   },
   methods: {
     cycleForward() {
+      if(this.isPlaying){
+        this.$emit("stopLoop")
+      }
       this.currentKitIndex = (this.currentKitIndex + 1) % this.kits.length
       Sequencer.loadKit(this.kits[this.currentKitIndex])
     },
     cycleBackward() {
+      if(this.isPlaying){
+        this.$emit("stopLoop")
+      }
       this.currentKitIndex = (this.currentKitIndex - 1 + this.kits.length) % this.kits.length
       Sequencer.loadKit(this.kits[this.currentKitIndex])
     },
+  },
+  props: {
+    isPlaying: {
+      type: Boolean
+    }
   }
 }
 </script>

@@ -1,6 +1,5 @@
 <template>
   <div class="button-container">
-<!--    'active' should indicate looper index position while playing-->
     <button @click="toggleLed" :class="{ 'drum_pad': true, 'playing': isPlaying }">
       <div :class="{ 'led-on': led_status, 'led-off': !led_status }"></div>
     </button>
