@@ -44,10 +44,15 @@
       <q-slider v-model="bpm" :min="30" :max="300" style="width: 250px"/>
     </q-card-section>
 
+
     <!-- Swing slider -->
     <q-card-section >
       <q-slider v-model="swingValue" :min="0" :max="1" :step="0.05" style="width: 250px"/>
     </q-card-section>
+
+    <CoolSlider></CoolSlider>
+
+    <Knob></Knob>
 
     <!-- Sliders for swing and bpm modulation -->
     <!--<Sliders1 :swing-value="swingValue" :bpm-value="bpm"/>-->
@@ -71,17 +76,18 @@ import {defineComponent, onMounted, reactive, ref, watch} from "vue";
 import Buttons1 from "components/Buttons.vue";
 import PlayPauseButton from "components/PlayPauseButton.vue";
 import Displays1 from "components/Displays.vue";
-import Knob1 from "components/Knobs.vue";
 import Sliders1 from "components/Sliders.vue";
 import SimpleButton from "components/SimpleButton.vue";
 import BPMSwing from "components/BPMSwing.vue";
 import selectKit from "components/KitSelection.vue";
 import SubdivisionSelection from "components/SubdivisionSelection.vue";
+import CoolSlider from "components/CoolSlider.vue";
+import Knob from "components/Knob.vue";
 export default defineComponent({
   name : 'SequencerComp',
   components: {
     SubdivisionSelection,
-    selectKit, BPMSwing, SimpleButton, Sliders1, Knob1, Displays1, PlayPauseButton, Buttons1},
+    selectKit, BPMSwing, SimpleButton, Sliders1, Displays1, PlayPauseButton, Buttons1, CoolSlider, Knob},
   setup(){
     const beat = ref(0)
     const rows = reactive([]);

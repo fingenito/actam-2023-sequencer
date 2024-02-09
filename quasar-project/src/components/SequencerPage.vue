@@ -33,7 +33,6 @@ import Displays from "components/Displays.vue";
 import Sliders from "components/Sliders.vue";
 import PlayPauseButton from "components/PlayPauseButton.vue";
 import BPMSwing from "components/BPMSwing.vue";
-import Knobs from "components/Knobs.vue";
 import Section1 from "components/EffectSection/Section1.vue";
 import Section2 from "components/EffectSection/Section2.vue";
 import Section3 from "components/EffectSection/Section3.vue";
