@@ -16,15 +16,19 @@
           </div>
         </div>
 
-        <!--          <div>-->
-        <!--            <q-btn class="q-ma-md" @click="toggleRow(rowIndex)">-->
-        <!--              ON/OFF-->
-        <!--            </q-btn>-->
-        <!--&lt;!&ndash;            <simple-button></simple-button>&ndash;&gt;-->
-        <!--          </div>-->
+        <!-- On/off switches for each row -->
+<!--        <div>-->
+<!--          <simple-button></simple-button>-->
+<!--        </div>-->
 
       </div>
 
+
+    </q-card-section>
+
+    <!-- ON/OFF test -->
+    <q-card-section>
+      <simple-button></simple-button>
     </q-card-section>
 
     <!-- Screen showing BPM and swing values -->
@@ -32,7 +36,6 @@
       :bpm-value="bpm"
       :swing-value="Math.floor(swingValue * 100)"
     />
-
 
     <!-- Play button -->
     <q-card-section>
@@ -44,18 +47,20 @@
       <q-slider v-model="bpm" :min="30" :max="300" style="width: 250px"/>
     </q-card-section>
 
-
     <!-- Swing slider -->
     <q-card-section >
       <q-slider v-model="swingValue" :min="0" :max="1" :step="0.05" style="width: 250px"/>
     </q-card-section>
 
-    <CoolSlider></CoolSlider>
+    <!-- Volume slider -->
+    <q-card-section >
+      <q-slider v-model="volume" :min="-100" :max="0" :step="4" style="width: 250px"/>
+    </q-card-section>
 
-    <Knob></Knob>
+<!--    <CoolSlider></CoolSlider>-->
 
-    <!-- Sliders for swing and bpm modulation -->
-    <!--<Sliders1 :swing-value="swingValue" :bpm-value="bpm"/>-->
+<!--    <Knob></Knob>-->
+
 
     <!-- Kit selection -->
     <q-card-section>
@@ -85,9 +90,11 @@ import CoolSlider from "components/CoolSlider.vue";
 import Knob from "components/Knob.vue";
 export default defineComponent({
   name : 'SequencerComp',
+
   components: {
     SubdivisionSelection,
     selectKit, BPMSwing, SimpleButton, Sliders1, Displays1, PlayPauseButton, Buttons1, CoolSlider, Knob},
+
   setup(){
     const beat = ref(0)
     const rows = reactive([]);
@@ -96,7 +103,8 @@ export default defineComponent({
     const playing = ref(false);
     const selectedNoteLength = ref('4');
     const swingValue = ref(0);
-
+    const gain = ref(1);
+    const volume = ref(0);
 
     onMounted(()=>{
       Sequencer.initSequencer()
@@ -107,21 +115,31 @@ export default defineComponent({
       console.log(rows)
     })
 
+    // Updates BPM value if changed
     watch(bpm, (newBpm) => {
       console.log('BPM changed to', newBpm);
-      if (playing.value) {
-        Tone.Transport.bpm.value = newBpm;
-      }
+      Tone.Transport.bpm.value = newBpm;
     });
 
+    // Updates swing value if changed
     watch(swingValue, (newSwing) => {
       console.log('Swing changed to', newSwing);
-      if (playing.value) {
-        Tone.Transport.swing = newSwing;
-      }
+      Tone.Transport.swing = newSwing;
     });
 
+    // Updates gain value if changed
+    watch(gain, (newGain) => {
+      console.log('Gain changed to', newGain);
+      Sequencer.mainGain.gain.value = newGain;
+    });
 
+    // Updates volume value if changed
+    watch(volume, (newVolume) => {
+      console.log('Volume changed to', newVolume);
+      Sequencer.mainVolume.volume.value = newVolume;
+    });
+
+    // Toggles button in position (row, col)
     const toggleButton = (row,col) =>{
       rows[row].buttons[col].isActive = !rows[row].buttons[col].isActive;
       Sequencer.toggle(row,col,rows[row].buttons[col].isActive);
@@ -134,12 +152,14 @@ export default defineComponent({
       //   row gain to default value
     }
 
+    // Signals to start loop
     const play = () => {
       console.log('play')
       configLoop(bpm.value, selectedNoteLength.value, swingValue.value);
       playing.value = true;
     }
 
+    // Stops loop
     const stop = () => {
       Tone.Transport.stop();
       Tone.Transport.cancel();
@@ -147,12 +167,12 @@ export default defineComponent({
       beat.value = 0;
     }
 
+    // Starts loop
     const configLoop = (bpm, selectedNoteLength, swingValue)=> {
       const repeat = async (time) => {
         await createLoopAsync(time, beat.value); /* createLoopAsync should be changed back to sequencer.createloop if changes want to be averted */
         beat.value = (beat.value + 1) % 8;
       };
-
       Tone.Transport.bpm.value = bpm;
       Tone.Transport.swing = swingValue;
       Tone.Transport.scheduleRepeat(repeat, selectedNoteLength + "n");
@@ -176,7 +196,9 @@ export default defineComponent({
       playing,
       toggleButton,
       selectedNoteLength,
-      swingValue
+      swingValue,
+      gain,
+      volume
     }
   },
   methods: {
@@ -193,8 +215,5 @@ export default defineComponent({
   width: 1000px;
   height: 600px;
 }
-.selected-note-length {
-  background-color: #42a5f5;
-  color: white;
-}
+
 </style>

@@ -1,20 +1,29 @@
 <template>
-  <button class="simple-button" @click="toggleLed">
-    <div class="led" :class="{ 'led-on': isLedOn }"></div>
+  <button class="simple-button" @click="changeState">
+    <div class="led" :class="{ 'led-on': isOn }"></div>
   </button>
 </template>
 
 <script>
+import Sequencer from "components/Sequencer";
+import {ref} from "vue";
+
 export default {
   name: 'SimpleButton',
   data() {
     return {
-      isLedOn: false
+      isOn: ref(true)
     };
   },
   methods: {
-    toggleLed() {
-      this.isLedOn = !this.isLedOn;
+    // Add this to Sequencer.vue comp
+    changeState() {
+      this.isOn = !this.isOn;
+      if(this.isOn) {
+        Sequencer.mainGain.gain.value = 1;
+      }else{
+        Sequencer.mainGain.gain.value = 0;
+      }
     }
   }
 }
@@ -57,4 +66,3 @@ export default {
   background-color: red;
 }
 </style>
-

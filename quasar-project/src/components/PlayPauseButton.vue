@@ -20,11 +20,11 @@ export default {
   watch: {
     isPlaying(newValue) {
       if (newValue) {
-        // Update styles for play button when isPlaying is true
+        // Update styles when playing
         this.playButtonBoxShadow = '0 0 10px, inset 0 0 50px rgba(163, 53, 253, 0.87)';
         this.pauseButtonBoxShadow = '0 0 10px, inset 0 0 50px rgba(0, 0, 0, 0.8)';
       } else {
-        // Update styles for pause button when isPlaying is false
+        // Update styles when paused
         this.playButtonBoxShadow = '0 0 10px, inset 0 0 50px rgba(0, 0, 0, 0.8)';
         this.pauseButtonBoxShadow = '0 0 10px, inset 0 0 50px rgba(163, 53, 253, 0.87)';
       }
