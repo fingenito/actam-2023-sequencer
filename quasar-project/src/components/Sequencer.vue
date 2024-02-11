@@ -16,26 +16,23 @@
           </div>
         </div>
 
-        <!-- On/off switches for each row -->
-<!--        <div>-->
-<!--          <simple-button></simple-button>-->
-<!--        </div>-->
+        <!-- ON/OFF test -->
+        <q-card-section>
+          <simple-button :row-index="rowIndex"></simple-button>
+        </q-card-section>
 
       </div>
 
 
     </q-card-section>
 
-    <!-- ON/OFF test -->
-    <q-card-section>
-      <simple-button></simple-button>
-    </q-card-section>
+
 
     <!-- Screen showing BPM and swing values -->
-    <BPMSwing
-      :bpm-value="bpm"
-      :swing-value="Math.floor(swingValue * 100)"
-    />
+<!--    <BPMSwing-->
+<!--      :bpm-value="bpm"-->
+<!--      :swing-value="Math.floor(swingValue * 100)"-->
+<!--    />-->
 
     <!-- Play button -->
     <q-card-section>
@@ -63,9 +60,9 @@
 
 
     <!-- Kit selection -->
-    <q-card-section>
-      <selectKit :is-playing="playing" @stopLoop="stop"/>
-    </q-card-section>
+<!--    <q-card-section>-->
+<!--      <selectKit :is-playing="playing" @stopLoop="stop"/>-->
+<!--    </q-card-section>-->
 
     <!-- Subdivision selection -->
 <!--    <q-card-section>-->
@@ -128,18 +125,10 @@ export default defineComponent({
     });
 
     // Updates gain value if changed
-    watch(gain, (newGain) => {
-      console.log('Gain changed to', newGain);
-      Sequencer.mainGain.gain.value = newGain;
-    });
+
 
     // Updates volume value if changed
-    watch(volume, (newVolume) => {
-      console.log('Volume changed to', newVolume);
-      Sequencer.mainVolume.volume.value = newVolume;
-    });
-
-    // Toggles button in position (row, col)
+        // Toggles button in position (row, col)
     const toggleButton = (row,col) =>{
       rows[row].buttons[col].isActive = !rows[row].buttons[col].isActive;
       Sequencer.toggle(row,col,rows[row].buttons[col].isActive);

@@ -15,15 +15,21 @@ export default {
       isOn: ref(true)
     };
   },
+  props: {
+    rowIndex: {
+      type: Number
+    }
+  },
   methods: {
     // Add this to Sequencer.vue comp
     changeState() {
       this.isOn = !this.isOn;
       if(this.isOn) {
-        Sequencer.mainGain.gain.value = 1;
+        Sequencer.gains[this.rowIndex].gain.value = 1;
       }else{
-        Sequencer.mainGain.gain.value = 0;
+        Sequencer.gains[this.rowIndex].gain.value = 0;
       }
+      console.log("Toggled row", this.rowIndex);
     }
   }
 }
