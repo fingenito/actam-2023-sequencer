@@ -56,7 +56,7 @@
 
 <!--    <CoolSlider></CoolSlider>-->
 
-<!--    <Knob></Knob>-->
+<Knob></Knob>
 
 
     <!-- Kit selection -->

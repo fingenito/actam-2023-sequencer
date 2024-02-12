@@ -1,39 +1,33 @@
 <template>
-  <div class="knob-container">
-    <div class="knob">
-    </div>
-  </div>
+  <q-knob
+    :min="1"
+    :max="100"
+    v-model="value"
+    size="70px"
+    :thickness="0.22"
+    color="purple"
+    track-color="transparent"
+    class="q-ma-md"
+  >
+    <template v-slot:default>
+      <img src="src/assets/images/pngknob.png"/>
+    </template>
+  </q-knob>
 </template>
 
 <script>
+import { ref } from 'vue'
+
 export default {
-  name: 'Knob'
+  setup () {
+    return {
+      value: ref(0)
+    }
+  }
 }
 </script>
 
 <style scoped>
-.knob-container {
-  display: flex;
-  width: 80px;
-  height: 80px;
-  background-color: white;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
-.knob {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: black;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
-  border-width: 2px;
-}
 
 
 </style>
