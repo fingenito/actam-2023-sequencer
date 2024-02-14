@@ -82,6 +82,11 @@ class Sequencer{
       const gain = new Tone.Gain();
       const vol = new Tone.Volume();
 
+      ps.pitch = 0;
+      phaser.wet.value = 0;
+      delay.wet.value = 0;
+      rev.wet.value = 0;
+
       this.pitchShifts.push(ps);
       this.phasers.push(phaser);
       this.delays.push(delay);

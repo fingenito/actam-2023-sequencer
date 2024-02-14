@@ -28,35 +28,67 @@
 
 
 
-    <!-- Screen showing BPM and swing values -->
-<!--    <BPMSwing-->
-<!--      :bpm-value="bpm"-->
-<!--      :swing-value="Math.floor(swingValue * 100)"-->
-<!--    />-->
-
-    <!-- Play button -->
     <q-card-section>
       <PlayPauseButton @startSeq = "play" @pauseSeq = "stop" :is-playing="playing"/>
     </q-card-section>
 
-    <!-- BPM slider -->
-    <q-card-section >
-      <q-slider v-model="bpm" :min="30" :max="300" style="width: 250px"/>
+
+    <!-- Sliders -->
+    <q-card class="my-card" flat bordered>
+      <q-card-section horizontal>
+        <!-- BPM slider -->
+        <q-card-section>
+          <q-badge>BPM</q-badge>
+          <q-slider v-model="bpm" :min="30" :max="300" style="width: 250px"/>
+        </q-card-section>
+
+        <q-separator vertical />
+
+        <!-- Swing slider -->
+        <q-card-section>
+          <q-badge>Swing</q-badge>
+          <q-slider v-model="swingValue" :min="0" :max="1" :step="0.05" style="width: 250px"/>
+        </q-card-section>
+
+        <q-separator vertical />
+
+        <!-- Volume slider -->
+        <q-card-section>
+          <q-badge>Volume</q-badge>
+          <q-slider v-model="volume" :min="-100" :max="0" :step="4" style="width: 250px"/>
+        </q-card-section>
+
+      </q-card-section>
+    </q-card>
+
+
+<!-- Knobs -->
+<!--    <q-card-section horizontal class="q-mt-lg">-->
+<!--      <div>-->
+<!--        <q-card-section horizontal>-->
+<!--          <q-knob class="q-mr-md q-mb-md"/>-->
+<!--          <q-separator vertical/>-->
+<!--          <q-knob class="q-ml-md"/>-->
+<!--        </q-card-section>-->
+
+<!--        <q-card-section horizontal class="q-mr-20px">-->
+<!--          <q-knob class="q-mr-md q-mb-md"/>-->
+<!--          <q-separator vertical/>-->
+<!--          <q-knob class="q-ml-md"/>-->
+<!--        </q-card-section>-->
+<!--      </div>-->
+<!--    </q-card-section>-->
+    <q-card-section horizontal>
+      <div v-for="(row, sectionIndex) in rows">
+        <KnobSection :row="sectionIndex" :section-label="row.instrument"/>
+      </div>
     </q-card-section>
 
-    <!-- Swing slider -->
-    <q-card-section >
-      <q-slider v-model="swingValue" :min="0" :max="1" :step="0.05" style="width: 250px"/>
-    </q-card-section>
 
-    <!-- Volume slider -->
-    <q-card-section >
-      <q-slider v-model="volume" :min="-100" :max="0" :step="4" style="width: 250px"/>
-    </q-card-section>
 
 <!--    <CoolSlider></CoolSlider>-->
 
-<Knob></Knob>
+<!--    <Knob></Knob>-->
 
 
     <!-- Kit selection -->
@@ -85,10 +117,12 @@ import selectKit from "components/KitSelection.vue";
 import SubdivisionSelection from "components/SubdivisionSelection.vue";
 import CoolSlider from "components/CoolSlider.vue";
 import Knob from "components/Knob.vue";
+import KnobSection from "components/KnobsFX.vue";
 export default defineComponent({
   name : 'SequencerComp',
 
   components: {
+    KnobSection,
     SubdivisionSelection,
     selectKit, BPMSwing, SimpleButton, Sliders1, Displays1, PlayPauseButton, Buttons1, CoolSlider, Knob},
 
@@ -202,7 +236,7 @@ export default defineComponent({
 <style>
 .card{
   width: 1000px;
-  height: 600px;
+  height: 1000px;
 }
 
 </style>

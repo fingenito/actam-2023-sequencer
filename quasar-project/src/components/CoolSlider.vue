@@ -1,4 +1,3 @@
-
 <template>
   <div class="slider">
     <div class="slider-track">
