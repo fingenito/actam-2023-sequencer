@@ -1,24 +1,25 @@
 <template>
   <q-card class="card">
     <q-card-section>
-      {{beat}}
+<!--      {{beat}}-->
       <div class="row q-justify-between" v-for="(row,rowIndex) in rows" :key="row.id">
-
-        <!-- Row labels -->
-        <div class="col-1 flex justify-center">
-          <Displays1 :displayText="row.instrument"/>
-        </div>
-
-        <!-- Sequencer buttons -->
-        <div class="col-1 flex justify-center" v-for="(button,colIndex) in row.buttons" :key="button.id" >
-          <div>
-            <Buttons1 class="q-ma-md" @click="toggleButton(rowIndex,colIndex)" :isPlaying="playing && colIndex === beat"></Buttons1>
+        <q-card-section horizontal>
+          <!-- Row labels -->
+          <div class="col-1 flex justify-center">
+            <Displays1 :displayText="row.instrument"/>
           </div>
-        </div>
 
-        <!-- ON/OFF test -->
-        <q-card-section>
-          <simple-button :row-index="rowIndex"></simple-button>
+          <!-- Sequencer buttons -->
+          <div class="col-1 flex justify-center" v-for="(button,colIndex) in row.buttons" :key="button.id" >
+            <div>
+              <Buttons1 class="q-ma-md" @click="toggleButton(rowIndex,colIndex)" :isPlaying="playing && colIndex === beat"></Buttons1>
+            </div>
+          </div>
+
+          <!-- ON/OFF test -->
+          <q-card-section>
+            <simple-button :row-index="rowIndex" class="q-ma-sm"></simple-button>
+          </q-card-section>
         </q-card-section>
 
       </div>
@@ -42,64 +43,44 @@
           <q-slider v-model="bpm" :min="30" :max="300" style="width: 250px"/>
         </q-card-section>
 
-        <q-separator vertical />
+<!--        <q-separator vertical />-->
 
-        <!-- Swing slider -->
-        <q-card-section>
-          <q-badge>Swing</q-badge>
-          <q-slider v-model="swingValue" :min="0" :max="1" :step="0.05" style="width: 250px"/>
-        </q-card-section>
+<!--        &lt;!&ndash; Swing slider &ndash;&gt;-->
+<!--        <q-card-section>-->
+<!--          <q-badge>Swing</q-badge>-->
+<!--          <q-slider v-model="swingValue" :min="0" :max="1" :step="0.05" style="width: 250px"/>-->
+<!--        </q-card-section>-->
 
         <q-separator vertical />
 
         <!-- Volume slider -->
         <q-card-section>
           <q-badge>Volume</q-badge>
-          <q-slider v-model="volume" :min="-100" :max="0" :step="4" style="width: 250px"/>
+          <q-slider v-model="volume" :min="-40" :max="0" :step="4" style="width: 250px"/>
         </q-card-section>
 
       </q-card-section>
     </q-card>
 
-
-<!-- Knobs -->
-<!--    <q-card-section horizontal class="q-mt-lg">-->
-<!--      <div>-->
-<!--        <q-card-section horizontal>-->
-<!--          <q-knob class="q-mr-md q-mb-md"/>-->
-<!--          <q-separator vertical/>-->
-<!--          <q-knob class="q-ml-md"/>-->
-<!--        </q-card-section>-->
-
-<!--        <q-card-section horizontal class="q-mr-20px">-->
-<!--          <q-knob class="q-mr-md q-mb-md"/>-->
-<!--          <q-separator vertical/>-->
-<!--          <q-knob class="q-ml-md"/>-->
-<!--        </q-card-section>-->
-<!--      </div>-->
-<!--    </q-card-section>-->
     <q-card-section horizontal>
       <div v-for="(row, sectionIndex) in rows">
         <KnobSection :row="sectionIndex" :section-label="row.instrument"/>
       </div>
     </q-card-section>
 
-
-
-<!--    <CoolSlider></CoolSlider>-->
-
-<!--    <Knob></Knob>-->
-
-
     <!-- Kit selection -->
-<!--    <q-card-section>-->
-<!--      <selectKit :is-playing="playing" @stopLoop="stop"/>-->
-<!--    </q-card-section>-->
+    <q-card-section horizontal>
+<!--      <q-card-section>-->
+<!--        <selectKit :is-playing="playing" @stopLoop="stop"/>-->
+<!--      </q-card-section>-->
 
-    <!-- Subdivision selection -->
-<!--    <q-card-section>-->
-<!--      <SubdivisionSelection @subdivisionChange="handleSubdivision"/>-->
-<!--    </q-card-section>-->
+      <!-- Subdivision selection -->
+<!--      <q-card-section>-->
+<!--        <SubdivisionSelection @subdivisionChange="handleSubdivision"/>-->
+<!--      </q-card-section>-->
+    </q-card-section>
+
+    <!--    <CoolSlider></CoolSlider>-->
   </q-card>
 </template>
 
@@ -134,7 +115,6 @@ export default defineComponent({
     const playing = ref(false);
     const selectedNoteLength = ref('4');
     const swingValue = ref(0);
-    const gain = ref(1);
     const volume = ref(0);
 
     onMounted(()=>{
@@ -143,41 +123,31 @@ export default defineComponent({
         rows.push(row);
       })
 
-      console.log(rows)
+      // console.log(rows)
     })
 
     // Updates BPM value if changed
     watch(bpm, (newBpm) => {
-      console.log('BPM changed to', newBpm);
+      // console.log('BPM changed to', newBpm);
       Tone.Transport.bpm.value = newBpm;
     });
 
     // Updates swing value if changed
-    watch(swingValue, (newSwing) => {
-      console.log('Swing changed to', newSwing);
-      Tone.Transport.swing = newSwing;
-    });
-
-    // Updates gain value if changed
+    // watch(swingValue, (newSwing) => {
+    //   // console.log('Swing changed to', newSwing);
+    //   Tone.Transport.swing = newSwing;
+    // });
 
 
-    // Updates volume value if changed
-        // Toggles button in position (row, col)
+    // Toggles button in position (row, col)
     const toggleButton = (row,col) =>{
       rows[row].buttons[col].isActive = !rows[row].buttons[col].isActive;
       Sequencer.toggle(row,col,rows[row].buttons[col].isActive);
     }
 
-    const toggleRow = (row) => {
-      // if(row.isOn):
-      //   row gain to 0
-      // else:
-      //   row gain to default value
-    }
-
     // Signals to start loop
     const play = () => {
-      console.log('play')
+      // console.log('play')
       configLoop(bpm.value, selectedNoteLength.value, swingValue.value);
       playing.value = true;
     }
@@ -220,7 +190,6 @@ export default defineComponent({
       toggleButton,
       selectedNoteLength,
       swingValue,
-      gain,
       volume
     }
   },

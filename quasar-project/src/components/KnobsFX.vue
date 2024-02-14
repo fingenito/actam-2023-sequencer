@@ -29,17 +29,17 @@
           <q-separator vertical/>
 
           <!-- Phaser knob -->
-          <q-knob
-            show-value
-            font-size="12px"
-            v-model="phaserValue"
-            :thickness="0.22"
-            color="blue"
-            track-color="grey-3"
-            class="q-ml-md q-mb-md"
-          >
-            {{ phaserValue }}%
-          </q-knob>
+<!--          <q-knob-->
+<!--            show-value-->
+<!--            font-size="12px"-->
+<!--            v-model="phaserValue"-->
+<!--            :thickness="0.22"-->
+<!--            color="blue"-->
+<!--            track-color="grey-3"-->
+<!--            class="q-ml-md q-mb-md"-->
+<!--          >-->
+<!--            {{ phaserValue }}%-->
+<!--          </q-knob>-->
         </q-card-section>
 
         <q-card-section horizontal>
@@ -102,26 +102,26 @@ export default {
 
     // Watches for change in pitch
     watch(pitchValue, (newPitch) => {
-      console.log('pitch changed to', newPitch);
+      // console.log('pitch changed to', newPitch);
       Sequencer.pitchShifts[props.row].pitch = newPitch;
     });
 
     // Watches for change in phase
     watch(phaserValue, (newPhase) => {
-      console.log('phase changed to', newPhase);
-      Sequencer.phasers[props.row].wet.value = newPhase;
+      // console.log('phase changed to', newPhase);
+      Sequencer.phasers[props.row].wet.value = newPhase / 100;
     });
 
     // Watches for change in delay
     watch(delayValue, (newDelay) => {
-      console.log('delay changed to', newDelay);
-      Sequencer.delays[props.row].wet.value = newDelay;
+      // console.log('delay changed to', newDelay);
+      Sequencer.delays[props.row].wet.value = newDelay / 100;
     });
 
     // Watches for change in reverb
     watch(reverbValue, (newReverb) => {
-      console.log('reverb changed to', newReverb);
-      Sequencer.reverbs[props.row].wet.value = newReverb;
+      // console.log('reverb changed to', newReverb);
+      Sequencer.reverbs[props.row].wet.value = newReverb / 100;
     });
 
     return{
