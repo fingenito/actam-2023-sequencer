@@ -12,6 +12,7 @@ export default {
   props: {
     isPlaying: Boolean
   },
+
   data() {
     return {
       led_status: false
@@ -28,7 +29,6 @@ export default {
 <style>
 .button-container {
   position: relative;
-  left: 50%;
   display: flex;
   flex-direction: row;
 }

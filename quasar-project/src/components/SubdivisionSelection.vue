@@ -24,7 +24,7 @@ export default {
     }
   },
   async created() {
-    await Sequencer.initSequencer()
+    // await Sequencer.initSequencer()
     this.subdivisions = Sequencer.getSubdivisions()
   },
   methods: {

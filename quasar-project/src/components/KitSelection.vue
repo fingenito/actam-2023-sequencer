@@ -25,7 +25,7 @@ export default {
     }
   },
   async created() {
-    await Sequencer.initSequencer()
+    // await Sequencer.initSequencer()
     this.kits = Sequencer.getKits()
   },
   methods: {

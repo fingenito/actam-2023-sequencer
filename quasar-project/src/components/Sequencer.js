@@ -17,17 +17,17 @@ class Sequencer{
 
   // Initializes variables
   static initSequencer(){
-    this.players = new Map();
-    this.kits = ['808', 'hiphop', '8bit'];
+    // this.players = new Map();
+    // this.kits = ['808', 'hiphop', '8bit'];
     this.instruments = ['kick','hihat','snare', 'openhat', 'perc']; /* Add clap/other sounds? */
-    this.subdivisions = ['4', '8', '16']
+    // this.subdivisions = ['4', '8', '16']
     this.rows = this.makeGrid(this.instruments);
 
     // Initializes effects
-    this.configFX();
-
-    // Initializes kit
-    this.loadKit(this.kits[0]);
+    // this.configFX();
+    //
+    // // Initializes kit
+    // this.loadKit(this.kits[0]);
   }
 
   // Loads kit based on selection
@@ -48,8 +48,10 @@ class Sequencer{
 
     for (const instr in instruments) {
       // console.log('instr', instruments[instr])
-      const row = {instrument : instruments[instr],
-        buttons : []}
+      const row = {
+        instrument : instruments[instr],
+        buttons : []
+      }
       for (let i = 0; i < 8; i++) {
         row.buttons.push({
           id: instruments[instr],
@@ -61,39 +63,40 @@ class Sequencer{
     return rows;
   };
 
-  static configFX(){
-    this.pitchShifts = [];
-    // this.phasers = [];
-    this.delays = [];
-    this.reverbs = [];
-    this.gains = [];
+  static configFX(numInstr){
+    const pitchShifts = [];
+    const phasers = [];
+    const delays = [];
+    const reverbs = [];
+    const gains = [];
     // this.volumes = [];
-    this.masterVolume = new Tone.Volume(0)
+    const masterVolume = new Tone.Volume(0)
 
-    for(let i = 0; i < this.instruments.length; i++){
+    for(let i = 0; i < numInstr; i++){
       const ps = new Tone.PitchShift();
-      // const phaser = new Tone.Phaser({
-      //   frequency: 5, // phasing speed (in hertz)
-      //   octaves: 2, // octaves of the effect (must be >= 0)
-      //   baseFrequency: 2000 // base filter frequency
-      // });
+      const phaser = new Tone.Phaser({
+        frequency: 5, // phasing speed (in hertz)
+        octaves: 2, // octaves of the effect (must be >= 0)
+        baseFrequency: 2000 // base filter frequency
+      });
       const delay = new Tone.FeedbackDelay("8n", 0.3);
       const rev = new Tone.JCReverb(0.4);
       const gain = new Tone.Gain();
       // const vol = new Tone.Volume();
 
       ps.pitch = 0;
-      // phaser.wet.value = 0;
+      phaser.wet.value = 0;
       delay.wet.value = 0;
       rev.wet.value = 0;
 
-      this.pitchShifts.push(ps);
-      // this.phasers.push(phaser);
-      this.delays.push(delay);
-      this.reverbs.push(rev);
-      this.gains.push(gain);
+      pitchShifts.push(ps);
+      phasers.push(phaser);
+      delays.push(delay);
+      reverbs.push(rev);
+      gains.push(gain);
       // this.volumes.push(vol);
     }
+    return [pitchShifts, delays, reverbs,phasers, gains]
   }
 
   // Toggles button in position (row, col)
@@ -133,7 +136,7 @@ class Sequencer{
       const active = row.buttons[beat].isActive
       if(active){
         // console.log('createLoop beat', beat)
-        instrument.start(time, 0, '8n')
+        instrument.start(time + 0.05, 0, '4n')
       }
     })
   };

@@ -5,18 +5,18 @@
       <div class="row q-justify-between" v-for="(row,rowIndex) in rows" :key="row.id">
         <q-card-section horizontal>
           <!-- Row labels -->
-          <div class="col-1 flex justify-center">
+          <div class="col flex justify-center">
             <Displays1 :displayText="row.instrument"/>
           </div>
 
           <!-- Sequencer buttons -->
-          <div class="col-1 flex justify-center" v-for="(button,colIndex) in row.buttons" :key="button.id" >
+          <div class="col flex justify-center" v-for="(button,colIndex) in row.buttons" :key="button.id" >
             <div>
               <Buttons1 class="q-ma-md" @click="toggleButton(rowIndex,colIndex)" :isPlaying="playing && colIndex === beat"></Buttons1>
             </div>
           </div>
 
-          <!-- ON/OFF test -->
+          <!-- ON/OFF buttons -->
           <q-card-section>
             <simple-button :row-index="rowIndex" class="q-ma-sm"></simple-button>
           </q-card-section>
@@ -37,19 +37,20 @@
     <!-- Sliders -->
     <q-card class="my-card" flat bordered>
       <q-card-section horizontal>
+
         <!-- BPM slider -->
         <q-card-section>
           <q-badge>BPM</q-badge>
           <q-slider v-model="bpm" :min="30" :max="300" style="width: 250px"/>
         </q-card-section>
 
-<!--        <q-separator vertical />-->
+        <q-separator vertical />
 
-<!--        &lt;!&ndash; Swing slider &ndash;&gt;-->
-<!--        <q-card-section>-->
-<!--          <q-badge>Swing</q-badge>-->
-<!--          <q-slider v-model="swingValue" :min="0" :max="1" :step="0.05" style="width: 250px"/>-->
-<!--        </q-card-section>-->
+        <!-- Swing slider -->
+        <q-card-section>
+          <q-badge>Swing</q-badge>
+          <q-slider v-model="swingValue" :min="0" :max="1" :step="0.05" style="width: 250px"/>
+        </q-card-section>
 
         <q-separator vertical />
 
@@ -64,21 +65,21 @@
 
     <q-card-section horizontal>
       <div v-for="(row, sectionIndex) in rows">
-        <KnobSection :row="sectionIndex" :section-label="row.instrument"/>
+        <KnobSection :row="sectionIndex" :section-label="row.instrument" :update="updateEffects"/>
       </div>
     </q-card-section>
 
     <!-- Kit selection -->
-    <q-card-section horizontal>
+<!--    <q-card-section horizontal>-->
 <!--      <q-card-section>-->
 <!--        <selectKit :is-playing="playing" @stopLoop="stop"/>-->
 <!--      </q-card-section>-->
 
-      <!-- Subdivision selection -->
+<!--      &lt;!&ndash; Subdivision selection &ndash;&gt;-->
 <!--      <q-card-section>-->
 <!--        <SubdivisionSelection @subdivisionChange="handleSubdivision"/>-->
 <!--      </q-card-section>-->
-    </q-card-section>
+<!--    </q-card-section>-->
 
     <!--    <CoolSlider></CoolSlider>-->
   </q-card>
@@ -87,7 +88,7 @@
 <script>
 import * as Tone from "tone";
 import Sequencer from "components/Sequencer";
-import {defineComponent, onMounted, reactive, ref, watch} from "vue";
+import {defineComponent, onMounted, reactive, ref, toRaw, watch} from "vue";
 import Buttons1 from "components/Buttons.vue";
 import PlayPauseButton from "components/PlayPauseButton.vue";
 import Displays1 from "components/Displays.vue";
@@ -108,7 +109,7 @@ export default defineComponent({
     selectKit, BPMSwing, SimpleButton, Sliders1, Displays1, PlayPauseButton, Buttons1, CoolSlider, Knob},
 
   setup(){
-    const beat = ref(0)
+    const beat = ref(-1)
     const rows = reactive([]);
     const cols = ref(8)
     const bpm = ref(120);
@@ -116,6 +117,45 @@ export default defineComponent({
     const selectedNoteLength = ref('4');
     const swingValue = ref(0);
     const volume = ref(0);
+    const sequencer = new Map();
+    const kits = ['808', 'hiphop', '8bit'];
+    const instruments = ['kick','hihat','snare', 'openhat', 'perc'];
+    const selectedKit = ref("808");
+    let currentPlayers;
+    const [pitchShifts,delays, reverbs,phasers, gains] = Sequencer.configFX(instruments.length);
+
+
+    kits.forEach((kit) =>{
+      const players = new Tone.Players();
+      instruments.forEach((instr, index) => {
+        players.add(instr, "src/assets/samples/" + kit + "/" + instr + ".wav")
+        players.player(instr).chain(pitchShifts[index], delays[index],reverbs[index],gains[index], Tone.Destination)
+      })
+      sequencer.set(kit, players); // maps kit to set of Tone.Player
+    })
+
+
+    const loop = new Tone.Loop((time) =>{
+      currentPlayers = sequencer.get(selectedKit.value);
+      console.log("currentPlayers: ",currentPlayers)// currentPlayers = players associated to selected kit
+      beat.value = (beat.value + 1) % 8;
+
+      toRaw(rows).forEach((row,index) => {
+        // console.log("row", row )
+        console.log("beat",beat.value)
+
+        const instrument = currentPlayers.player(toRaw(row).instrument)
+        const active = toRaw(row).buttons[beat.value].isActive
+        console.log("active",active)
+        if(active){
+          instrument.start(time)
+        }
+      })
+
+
+
+    },selectedNoteLength.value+'n');
+
 
     onMounted(()=>{
       Sequencer.initSequencer()
@@ -142,27 +182,34 @@ export default defineComponent({
     // Toggles button in position (row, col)
     const toggleButton = (row,col) =>{
       rows[row].buttons[col].isActive = !rows[row].buttons[col].isActive;
-      Sequencer.toggle(row,col,rows[row].buttons[col].isActive);
+      // Sequencer.toggle(row,col,rows[row].buttons[col].isActive);
     }
 
     // Signals to start loop
     const play = () => {
       // console.log('play')
-      configLoop(bpm.value, selectedNoteLength.value, swingValue.value);
+      // configLoop(bpm.value, selectedNoteLength.value, swingValue.value);
       playing.value = true;
+
+
+      loop.start("8n")
+      Tone.Transport.start()
+
     }
 
     // Stops loop
     const stop = () => {
+      loop.stop();
       Tone.Transport.stop();
       Tone.Transport.cancel();
       playing.value = false;
-      beat.value = 0;
+      beat.value = -1;
     }
 
     // Starts loop
     const configLoop = (bpm, selectedNoteLength, swingValue)=> {
       const repeat = async (time) => {
+        console.log("Time", time)
         await createLoopAsync(time, beat.value); /* createLoopAsync should be changed back to sequencer.createloop if changes want to be averted */
         beat.value = (beat.value + 1) % 8;
       };
@@ -190,12 +237,24 @@ export default defineComponent({
       toggleButton,
       selectedNoteLength,
       swingValue,
-      volume
+      volume,
+      pitchShifts,
+      delays,
+      reverbs,
+      phasers,
+      gains
     }
   },
   methods: {
     handleSubdivision(newSubdivision) {
       this.selectedNoteLength = newSubdivision;
+    },
+
+    updateEffects(index,pitchValue,phaserValue,reverbValue,delayValue){
+      this.pitchShifts[index].pitch = pitchValue;
+      this.delays[index].wet.value = delayValue;
+      this.phasers[index].wet.value = phaserValue;
+      this.reverbs[index].wet.value = reverbValue;
     }
   }
 })
