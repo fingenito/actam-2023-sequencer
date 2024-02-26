@@ -16,7 +16,15 @@ export default {
   data() {
     return {
       currentKitIndex: 0,
-      kits: []
+    }
+  },
+  props: {
+    isPlaying: {
+      type: Boolean
+    },
+    kits: {
+      type: Array,
+      required: true
     }
   },
   computed: {
@@ -24,30 +32,23 @@ export default {
       return this.kits[this.currentKitIndex]
     }
   },
-  async created() {
-    // await Sequencer.initSequencer()
-    this.kits = Sequencer.getKits()
-  },
   methods: {
     cycleForward() {
       if(this.isPlaying){
         this.$emit("stopLoop")
       }
       this.currentKitIndex = (this.currentKitIndex + 1) % this.kits.length
-      Sequencer.loadKit(this.kits[this.currentKitIndex])
+      // Sequencer.loadKit(this.kits[this.currentKitIndex])
+      this.$emit('kitChange', this.kits[this.currentKitIndex])
     },
     cycleBackward() {
       if(this.isPlaying){
         this.$emit("stopLoop")
       }
       this.currentKitIndex = (this.currentKitIndex - 1 + this.kits.length) % this.kits.length
-      Sequencer.loadKit(this.kits[this.currentKitIndex])
+      // Sequencer.loadKit(this.kits[this.currentKitIndex])
+      this.$emit('kitChange', this.kits[this.currentKitIndex])
     },
-  },
-  props: {
-    isPlaying: {
-      type: Boolean
-    }
   }
 }
 </script>

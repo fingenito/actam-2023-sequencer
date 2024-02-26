@@ -70,7 +70,6 @@
             track-color="grey-3"
             class="q-mr-md q-mb-md"
             @update:model-value = "updateEffect"
-
           >
             {{ delayValue }}
           </q-knob>
@@ -90,7 +89,6 @@
             track-color="grey-3"
             class="q-ml-md q-mb-md"
             @update:model-value = "updateEffect"
-
           >
             {{ reverbValue }}
           </q-knob>

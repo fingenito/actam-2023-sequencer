@@ -18,16 +18,12 @@
 
           <!-- ON/OFF buttons -->
           <q-card-section>
-            <simple-button :row-index="rowIndex" class="q-ma-sm"></simple-button>
+            <simple-button :row-index="rowIndex" class="q-ma-sm" @turnOn="turnOn" @turnOff="turnOff"></simple-button>
           </q-card-section>
         </q-card-section>
 
       </div>
-
-
     </q-card-section>
-
-
 
     <q-card-section>
       <PlayPauseButton @startSeq = "play" @pauseSeq = "stop" :is-playing="playing"/>
@@ -47,10 +43,10 @@
         <q-separator vertical />
 
         <!-- Swing slider -->
-        <q-card-section>
-          <q-badge>Swing</q-badge>
-          <q-slider v-model="swingValue" :min="0" :max="1" :step="0.05" style="width: 250px"/>
-        </q-card-section>
+<!--        <q-card-section>-->
+<!--          <q-badge>Swing</q-badge>-->
+<!--          <q-slider v-model="swingValue" :min="0" :max="1" :step="0.05" style="width: 250px"/>-->
+<!--        </q-card-section>-->
 
         <q-separator vertical />
 
@@ -63,6 +59,7 @@
       </q-card-section>
     </q-card>
 
+    <!-- Effects section -->
     <q-card-section horizontal>
       <div v-for="(row, sectionIndex) in rows">
         <KnobSection :row="sectionIndex" :section-label="row.instrument" :update="updateEffects"/>
@@ -70,25 +67,28 @@
     </q-card-section>
 
     <!-- Kit selection -->
-<!--    <q-card-section horizontal>-->
+    <q-card-section horizontal>
 <!--      <q-card-section>-->
-<!--        <selectKit :is-playing="playing" @stopLoop="stop"/>-->
+<!--        <selectKit :is-playing="playing" @stopLoop="stop" :kits="kits"/>-->
 <!--      </q-card-section>-->
 
-<!--      &lt;!&ndash; Subdivision selection &ndash;&gt;-->
-<!--      <q-card-section>-->
-<!--        <SubdivisionSelection @subdivisionChange="handleSubdivision"/>-->
-<!--      </q-card-section>-->
-<!--    </q-card-section>-->
+      <q-card-section>
+        <selectKit :is-playing="playing" @stopLoop="stop" :kits="kits" @kitChange="changeKit"/>
+      </q-card-section>
 
-    <!--    <CoolSlider></CoolSlider>-->
+      <!-- Subdivision selection -->
+      <q-card-section>
+        <SubdivisionSelection @subdivisionChange="changeSubdivision" :subdivisions="subdivisions"/>
+      </q-card-section>
+    </q-card-section>
+
   </q-card>
 </template>
 
 <script>
 import * as Tone from "tone";
 import Sequencer from "components/Sequencer";
-import {defineComponent, onMounted, reactive, ref, toRaw, watch} from "vue";
+import {defineComponent, onMounted, reactive, ref, toRaw, watch, watchEffect} from "vue";
 import Buttons1 from "components/Buttons.vue";
 import PlayPauseButton from "components/PlayPauseButton.vue";
 import Displays1 from "components/Displays.vue";
@@ -112,59 +112,55 @@ export default defineComponent({
     const beat = ref(-1)
     const rows = reactive([]);
     const cols = ref(8)
-    const bpm = ref(120);
+
     const playing = ref(false);
-    const selectedNoteLength = ref('4');
+
+    const bpm = ref(120);
     const swingValue = ref(0);
     const volume = ref(0);
+
     const sequencer = new Map();
+    let currentPlayers;
+
     const kits = ['808', 'hiphop', '8bit'];
     const instruments = ['kick','hihat','snare', 'openhat', 'perc'];
-    const selectedKit = ref("808");
-    let currentPlayers;
-    const [pitchShifts,delays, reverbs,phasers, gains] = Sequencer.configFX(instruments.length);
+    const subdivisions = ['4', '8', '16']
 
+    const selectedNoteLength = ref(subdivisions[0]);
+    const selectedKit = ref(kits[0]);
+    const [pitchShifts, delays, reverbs, phasers, gains] = Sequencer.configFX(instruments.length);
 
+    // Creates set of players containing sounds for each kit
     kits.forEach((kit) =>{
       const players = new Tone.Players();
       instruments.forEach((instr, index) => {
         players.add(instr, "src/assets/samples/" + kit + "/" + instr + ".wav")
-        players.player(instr).chain(pitchShifts[index], delays[index],reverbs[index],gains[index], Tone.Destination)
+        players.player(instr).chain(pitchShifts[index], delays[index], reverbs[index], gains[index], Tone.Destination)
       })
       sequencer.set(kit, players); // maps kit to set of Tone.Player
     })
 
-
+    // Loops through selected buttons
     const loop = new Tone.Loop((time) =>{
       currentPlayers = sequencer.get(selectedKit.value);
-      console.log("currentPlayers: ",currentPlayers)// currentPlayers = players associated to selected kit
+      // console.log("currentPlayers: ",currentPlayers)// currentPlayers = players associated to selected kit
       beat.value = (beat.value + 1) % 8;
-
       toRaw(rows).forEach((row,index) => {
-        // console.log("row", row )
-        console.log("beat",beat.value)
-
         const instrument = currentPlayers.player(toRaw(row).instrument)
         const active = toRaw(row).buttons[beat.value].isActive
-        console.log("active",active)
         if(active){
           instrument.start(time)
         }
       })
-
-
-
     },selectedNoteLength.value+'n');
 
-
+    // Initializes sequencer
     onMounted(()=>{
       Sequencer.initSequencer()
       Sequencer.getRows().forEach((row)=>{
         rows.push(row);
       })
-
-      // console.log(rows)
-    })
+    });
 
     // Updates BPM value if changed
     watch(bpm, (newBpm) => {
@@ -172,29 +168,28 @@ export default defineComponent({
       Tone.Transport.bpm.value = newBpm;
     });
 
-    // Updates swing value if changed
-    // watch(swingValue, (newSwing) => {
-    //   // console.log('Swing changed to', newSwing);
-    //   Tone.Transport.swing = newSwing;
-    // });
+    // Updates swing value if changed --> NOT WORKING
+    watch(swingValue, (newSwing) => {
+      // console.log('Swing changed to', newSwing);
+      Tone.Transport.swing.value = newSwing;
+    });
 
+    // Updates
+    watchEffect(() => {
+      loop.interval = selectedNoteLength.value + 'n';
+      console.log("Loop selectedNoteLength", selectedNoteLength.value);
+    });
 
-    // Toggles button in position (row, col)
+    // Toggles sequencer button in position (row, col)
     const toggleButton = (row,col) =>{
       rows[row].buttons[col].isActive = !rows[row].buttons[col].isActive;
-      // Sequencer.toggle(row,col,rows[row].buttons[col].isActive);
     }
 
-    // Signals to start loop
+    // Plays pattern by calling loop function
     const play = () => {
-      // console.log('play')
-      // configLoop(bpm.value, selectedNoteLength.value, swingValue.value);
       playing.value = true;
-
-
-      loop.start("8n")
+      loop.start("8n") // delayed by 8n to avoid time misalignment
       Tone.Transport.start()
-
     }
 
     // Stops loop
@@ -205,27 +200,6 @@ export default defineComponent({
       playing.value = false;
       beat.value = -1;
     }
-
-    // Starts loop
-    const configLoop = (bpm, selectedNoteLength, swingValue)=> {
-      const repeat = async (time) => {
-        console.log("Time", time)
-        await createLoopAsync(time, beat.value); /* createLoopAsync should be changed back to sequencer.createloop if changes want to be averted */
-        beat.value = (beat.value + 1) % 8;
-      };
-      Tone.Transport.bpm.value = bpm;
-      Tone.Transport.swing = swingValue;
-      Tone.Transport.scheduleRepeat(repeat, selectedNoteLength + "n");
-      Tone.Transport.start()
-    }
-
-    const createLoopAsync = (time, beatValue) => {
-      return new Promise((resolve, reject) => {
-        Sequencer.createLoop(time, beatValue);
-        resolve();
-      });
-    };
-
     return{
       beat,
       rows,
@@ -242,20 +216,35 @@ export default defineComponent({
       delays,
       reverbs,
       phasers,
-      gains
+      gains,
+      kits,
+      subdivisions,
+      selectedKit
     }
   },
   methods: {
-    handleSubdivision(newSubdivision) {
+    changeSubdivision(newSubdivision){
       this.selectedNoteLength = newSubdivision;
+      // console.log("selectedNoteLength", this.selectedNoteLength);
     },
-
-    updateEffects(index,pitchValue,phaserValue,reverbValue,delayValue){
+    changeKit(newKit){
+      this.selectedKit = newKit;
+      console.log("selectedKit", selectKit);
+    },
+    updateEffects(index, pitchValue, phaserValue, reverbValue, delayValue){
       this.pitchShifts[index].pitch = pitchValue;
       this.delays[index].wet.value = delayValue;
       this.phasers[index].wet.value = phaserValue;
       this.reverbs[index].wet.value = reverbValue;
-    }
+    },
+    turnOn(row){
+      console.log("Turn on row", row)
+      this.gains[row].gain.value = 1;
+    },
+    turnOff(row){
+      console.log("Turn off row", row)
+      this.gains[row].gain.value = 0;
+    },
   }
 })
 

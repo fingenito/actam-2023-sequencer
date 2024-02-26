@@ -14,18 +14,19 @@ export default {
   name: 'SubdivisionSelection',
   data() {
     return {
-      currentSubIndex: 0,
-      subdivisions: []
+      currentSubIndex: 0
+    }
+  },
+  props: {
+    subdivisions: {
+      type: Array,
+      required: true
     }
   },
   computed: {
     currentSubdivision(){
       return this.subdivisions[this.currentSubIndex]
     }
-  },
-  async created() {
-    // await Sequencer.initSequencer()
-    this.subdivisions = Sequencer.getSubdivisions()
   },
   methods: {
     cycleForward() {

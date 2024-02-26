@@ -25,9 +25,9 @@ export default {
     changeState() {
       this.isOn = !this.isOn;
       if(this.isOn) {
-        Sequencer.gains[this.rowIndex].gain.value = 1;
+        this.$emit('turnOn', this.rowIndex);
       }else{
-        Sequencer.gains[this.rowIndex].gain.value = 0;
+        this.$emit('turnOff', this.rowIndex);
       }
       console.log("Toggled row", this.rowIndex);
     }
