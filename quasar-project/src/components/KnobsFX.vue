@@ -2,8 +2,8 @@
   <q-card class="my-card" flat bordered>
     <q-card-section horizontal>
       <q-badge :label="sectionLabel"/>
-      <q-separator vertical/>
-      <q-btn @click="console.log(this.row)">ON/OFF</q-btn>
+<!--      <q-separator vertical/>-->
+<!--      <q-btn @click="console.log(this.row)">ON/OFF</q-btn>-->
     </q-card-section>
     <q-card-section>
       <div>
@@ -26,6 +26,7 @@
             track-color="grey-3"
             class="q-mr-md q-mb-md"
             @update:model-value = "updateEffect"
+            @dblclick="resetKnobValue('pitchValue')"
           >
             {{ pitchValue }}
           </q-knob>
@@ -45,7 +46,7 @@
             track-color="grey-3"
             class="q-ml-md q-mb-md"
             @update:model-value = "updateEffect"
-
+            @dblclick="resetKnobValue('phaserValue')"
           >
             {{ phaserValue }}
           </q-knob>
@@ -70,6 +71,7 @@
             track-color="grey-3"
             class="q-mr-md q-mb-md"
             @update:model-value = "updateEffect"
+            @dblclick="resetKnobValue('delayValue')"
           >
             {{ delayValue }}
           </q-knob>
@@ -89,6 +91,7 @@
             track-color="grey-3"
             class="q-ml-md q-mb-md"
             @update:model-value = "updateEffect"
+            @dblclick="resetKnobValue('reverbValue')"
           >
             {{ reverbValue }}
           </q-knob>
@@ -127,37 +130,11 @@ export default {
       required : true
     }
   },
-  setup(props){
+  setup(){
     const pitchValue = ref(0);
     const phaserValue = ref(0);
     const delayValue = ref(0);
     const reverbValue = ref(0);
-
-
-
-    // Watches for change in pitch
-    // watch(pitchValue, (newPitch) => {
-    //   // console.log('pitch changed to', newPitch);
-    //   Sequencer.pitchShifts[props.row].pitch = newPitch;
-    // });
-
-    // // Watches for change in phase
-    // watch(phaserValue, (newPhase) => {
-    //   // console.log('phase changed to', newPhase);
-    //   Sequencer.phasers[props.row].wet.value = newPhase / 100;
-    // });
-    //
-    // // Watches for change in delay
-    // watch(delayValue, (newDelay) => {
-    //   // console.log('delay changed to', newDelay);
-    //   Sequencer.delays[props.row].wet.value = newDelay / 100;
-    // });
-    //
-    // // Watches for change in reverb
-    // watch(reverbValue, (newReverb) => {
-    //   // console.log('reverb changed to', newReverb);
-    //   Sequencer.reverbs[props.row].wet.value = newReverb / 100;
-    // });
 
     return{
       pitchValue,
@@ -167,6 +144,10 @@ export default {
     }
   },
   methods : {
+    resetKnobValue(resetValue){
+      this[resetValue] = 0;
+      this.updateEffect();
+    },
     updateEffect (){
       this.update(this.row,this.pitchValue,this.phaserValue,this.reverbValue,this.delayValue)
     }

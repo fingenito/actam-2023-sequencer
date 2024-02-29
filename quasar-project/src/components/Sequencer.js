@@ -7,13 +7,12 @@ class Sequencer{
   static rows;
   static subdivisions;
 
-  static pitchShifts;
+  // static pitchShifts;
   // static phasers;
-  static delays;
-  static reverbs;
-  static gains;
-  static masterVolume;
-
+  // static delays;
+  // static reverbs;
+  // static gains;
+  // static masterVolume;
 
   // Initializes variables
   static initSequencer(){
@@ -31,14 +30,14 @@ class Sequencer{
   }
 
   // Loads kit based on selection
-  static loadKit(kit){
-    // console.log('loadKit',kit)
-    this.instruments.forEach((instr, index) => {
-      this.players.set(instr, new Tone.Player("src/assets/samples/" + kit + "/" + instr + ".wav").chain(this.pitchShifts[index], this.delays[index], this.reverbs[index], this.gains[index], this.masterVolume, Tone.Destination));
-    })
-    // console.log('players',this.players)
-
-  }
+  // static loadKit(kit){
+  //   // console.log('loadKit',kit)
+  //   this.instruments.forEach((instr, index) => {
+  //     this.players.set(instr, new Tone.Player("src/assets/samples/" + kit + "/" + instr + ".wav").chain(this.pitchShifts[index], this.phasers[index], this.delays[index], this.reverbs[index], this.gains[index], this.masterVolume, Tone.Destination));
+  //   })
+  //   // console.log('players',this.players)
+  //
+  // }
 
   // Creates rows of buttons
   static makeGrid (instruments){
@@ -63,6 +62,7 @@ class Sequencer{
     return rows;
   };
 
+  // Initializes effects
   static configFX(numInstr){
     const pitchShifts = [];
     const phasers = [];
@@ -75,14 +75,14 @@ class Sequencer{
     for(let i = 0; i < numInstr; i++){
       const ps = new Tone.PitchShift();
       const phaser = new Tone.Phaser({
-        frequency: 5, // phasing speed (in hertz)
+        frequency: 0.5, // phasing speed (in hertz)
         octaves: 2, // octaves of the effect (must be >= 0)
-        baseFrequency: 2000 // base filter frequency
+        baseFrequency: 1000 // base filter frequency
       });
       const delay = new Tone.FeedbackDelay("8n", 0.3);
       const rev = new Tone.JCReverb(0.4);
       const gain = new Tone.Gain();
-      // const vol = new Tone.Volume();
+
 
       ps.pitch = 0;
       phaser.wet.value = 0;
@@ -94,20 +94,18 @@ class Sequencer{
       delays.push(delay);
       reverbs.push(rev);
       gains.push(gain);
-      // this.volumes.push(vol);
+
     }
-    return [pitchShifts, delays, reverbs,phasers, gains]
+    return [pitchShifts, delays, reverbs, phasers, gains]
   }
 
   // Toggles button in position (row, col)
   static toggle(row, col, value){
-    // console.log('toggle')
     this.rows[row].buttons[col].isActive = value
   }
 
   // Returns this.rows
   static getRows(){
-    // console.log('getRows',this.rows)
     return this.rows
   }
 

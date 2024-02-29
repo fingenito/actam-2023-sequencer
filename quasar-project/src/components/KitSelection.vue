@@ -34,19 +34,11 @@ export default {
   },
   methods: {
     cycleForward() {
-      if(this.isPlaying){
-        this.$emit("stopLoop")
-      }
       this.currentKitIndex = (this.currentKitIndex + 1) % this.kits.length
-      // Sequencer.loadKit(this.kits[this.currentKitIndex])
       this.$emit('kitChange', this.kits[this.currentKitIndex])
     },
     cycleBackward() {
-      if(this.isPlaying){
-        this.$emit("stopLoop")
-      }
       this.currentKitIndex = (this.currentKitIndex - 1 + this.kits.length) % this.kits.length
-      // Sequencer.loadKit(this.kits[this.currentKitIndex])
       this.$emit('kitChange', this.kits[this.currentKitIndex])
     },
   }

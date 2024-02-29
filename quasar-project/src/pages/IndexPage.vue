@@ -6,7 +6,6 @@
       </div>
       <div v-else>
         <sequencer-comp></sequencer-comp>
-
       </div>
     </div>
 
@@ -26,7 +25,7 @@ export default defineComponent({
     const started = ref(false)
 
     const start = () =>{
-      Tone.start().then(r => {
+      Tone.start().then(() => {
         started.value = true
         console.log('started')
       })

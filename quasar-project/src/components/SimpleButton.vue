@@ -1,6 +1,6 @@
 <template>
-  <button class="simple-button" @click="changeState">
-    <div class="led" :class="{ 'led-on': isOn }"></div>
+  <button class="simple-button" @click="changeState" @dblclick="soloSwitch">
+    <div class="led" :class="{ 'led-on': isOn, 'led-solo': solo }"></div>
   </button>
 </template>
 
@@ -12,7 +12,8 @@ export default {
   name: 'SimpleButton',
   data() {
     return {
-      isOn: ref(true)
+      isOn: ref(true),
+      // solo: ref(false)
     };
   },
   props: {
@@ -70,5 +71,9 @@ export default {
 
 .led-on {
   background-color: red;
+}
+
+.led-solo {
+  background-color: blue;
 }
 </style>
