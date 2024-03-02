@@ -70,7 +70,7 @@ class Sequencer{
     const reverbs = [];
     const gains = [];
     // this.volumes = [];
-    const masterVolume = new Tone.Volume(0)
+    // const masterVolume = new Tone.Volume(0)
 
     for(let i = 0; i < numInstr; i++){
       const ps = new Tone.PitchShift();
@@ -94,15 +94,14 @@ class Sequencer{
       delays.push(delay);
       reverbs.push(rev);
       gains.push(gain);
-
     }
     return [pitchShifts, delays, reverbs, phasers, gains]
   }
 
   // Toggles button in position (row, col)
-  static toggle(row, col, value){
-    this.rows[row].buttons[col].isActive = value
-  }
+  // static toggle(row, col, value){
+  //   this.rows[row].buttons[col].isActive = value
+  // }
 
   // Returns this.rows
   static getRows(){
@@ -128,15 +127,15 @@ class Sequencer{
   }
 
   // Starts loop
-  static createLoop(time, beat) {
-    this.rows.forEach((row,index) => {
-      const instrument = this.players.get(row.instrument)
-      const active = row.buttons[beat].isActive
-      if(active){
-        // console.log('createLoop beat', beat)
-        instrument.start(time + 0.05, 0, '4n')
-      }
-    })
-  };
+  // static createLoop(time, beat) {
+  //   this.rows.forEach((row,index) => {
+  //     const instrument = this.players.get(row.instrument)
+  //     const active = row.buttons[beat].isActive
+  //     if(active){
+  //       // console.log('createLoop beat', beat)
+  //       instrument.start(time + 0.05, 0, '4n')
+  //     }
+  //   })
+  // };
 }
 export default Sequencer

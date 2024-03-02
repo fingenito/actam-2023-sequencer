@@ -2,8 +2,6 @@
   <q-card class="my-card" flat bordered>
     <q-card-section horizontal>
       <q-badge :label="sectionLabel"/>
-<!--      <q-separator vertical/>-->
-<!--      <q-btn @click="console.log(this.row)">ON/OFF</q-btn>-->
     </q-card-section>
     <q-card-section>
       <div>

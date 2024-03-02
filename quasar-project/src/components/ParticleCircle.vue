@@ -1,7 +1,7 @@
 <template>
   <div>
-    <canvas ref="visualizerCanvas" class="canvas"></canvas>
-    <button @click="goToSeqPage" class='glowing-btn'><span class='glowing-txt'>S<span class='faulty-letter'>T</span>ART</span></button>
+<!--    <canvas ref="visualizerCanvas" class="canvas"></canvas>-->
+    <button @click="$emit('startSequencer')" class='glowing-btn'><span class='glowing-txt'>S<span class='faulty-letter'>T</span>ART</span></button>
   </div>
 </template>
 
@@ -101,7 +101,7 @@ export default {
 @import url("https://fonts.googleapis.com/css?family=Raleway");
 
 :root {
-  --glow-color: hsl(273 98% 60%);
+  --glow-color: hsl(0, 0%, 92%);
 }
 
 *,
@@ -131,7 +131,7 @@ export default {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: #000000;
+  background: #ff7657;
 }
 
 

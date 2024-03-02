@@ -1,6 +1,6 @@
 <template>
-  <button class="simple-button" @click="changeState" @dblclick="soloSwitch">
-    <div class="led" :class="{ 'led-on': isOn, 'led-solo': solo }"></div>
+  <button class="simple-button" @click="changeState">
+    <div class="led" :class="{ 'led-on': isOn}"></div>
   </button>
 </template>
 
@@ -13,7 +13,6 @@ export default {
   data() {
     return {
       isOn: ref(true),
-      // solo: ref(false)
     };
   },
   props: {
@@ -22,7 +21,6 @@ export default {
     }
   },
   methods: {
-    // Add this to Sequencer.vue comp
     changeState() {
       this.isOn = !this.isOn;
       if(this.isOn) {
@@ -73,7 +71,4 @@ export default {
   background-color: red;
 }
 
-.led-solo {
-  background-color: blue;
-}
 </style>
