@@ -1,38 +1,37 @@
 <template>
   <!-- Impostazione flavio -->
   <div class="page-container">
+
     <div class="left">
       <div class="topleft-container">
         <BPMSwing/>
       </div>
+
       <div class="bottomleft-container">
-        <q-card style="background: rgba(255, 255, 255, 0);">
-          <q-card-section horizontal>
+        <div class="Selectors"> <!-- messo il div al posto della q-card per grafica -->
+
             <!-- Kit selection -->
             <selectKit :is-playing="playing" @stopLoop="stop" :kits="kits" @kitChange="changeKit"/>
 
             <!-- Subdivision selection -->
             <SubdivisionSelection @subdivisionChange="changeSubdivision" :subdivisions="subdivisions"/>
+        </div>
 
-          </q-card-section>
-        </q-card>
-        <q-card style="background: rgba(255, 255, 255, 1);">
-          <q-card-section horizontal>
+        <div class="Controls">
             <!-- BPM slider -->
             BPM
-            <q-slider vertical v-model="bpm" :min="30" :max="300" style="width: 250px"/>
+            <q-slider class="BPMSlider" vertical v-model="bpm" :min="30" :max="300" :reverse="true"/>
             <!-- Swing slider -->
             Swing
-            <q-slider vertical v-model="swingValue" :min="0" :max="1" :step="0.05" style="width: 250px"/>
+            <q-slider class="SwingSlider" vertical v-model="swingValue" :min="0" :max="1" :step="0.05" :reverse="true"/>
             <!-- Volume slider -->
             Volume
-            <q-slider vertical v-model="mainVolume.volume.value" :min="-40" :max="0" :step="4" style="width: 250px"/>
+            <q-slider class="VolumeSlider" vertical v-model="mainVolume.volume.value" :min="-40" :max="0" :step="4" :reverse="true"/>
 
             <!-- Play/pause buttons -->
             <PlayPauseButton/>
+        </div>
 
-          </q-card-section>
-        </q-card>
       </div>
     </div>
 
@@ -342,32 +341,22 @@ export default defineComponent({
 body {
   background-color: #8aff92;
   padding: 0;
-  //overflow: hidden;
-  height: 100vh; /* Rende l'elemento alto quanto l'intero viewport */
-}
-
-.card{
-  width: 1000px;
-  height: 2000px;
-  //height: 1000px;
 }
 
 .page-container {
-  margin: 40px;
+  margin: 3%;
+  width: 90%;
   background: lightgray;
-  border-radius: 40px;
-  padding: 10px; /* Regola la dimensione del margine sfumato interno */
+  border-radius: 50px;
+  padding: 2%; /* Regola la dimensione del margine sfumato interno */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.8), inset 0 0 50px rgba(80, 80, 80, 50);
   height: 88vh;
-  display: inline-list-item;
-  flex-direction: column-reverse;
 }
 
 .left {
   height: 100%;
   width: 35%;
   float: left;
-  display: flex;
   flex-direction: column;
 }
 .topleft-container {
@@ -382,14 +371,12 @@ body {
   height: 55%;
   width: 100%;
   flex-direction: row;
-  overflow: hidden;
 }
 
 .right {
   height: 100%;
   width: 65%;
   float: right;
-  display: flex;
   flex-direction: column;
 }
 .topright-container {
@@ -406,6 +393,28 @@ body {
   flex-direction: row;
   display: flex;
   overflow: hidden;
+}
+
+.BPMSlider, .SwingSlider, .VolumeSlider{
+  height: 90%;
+  top: 5%;
+  left: 5%;
+  padding: 0;
+  position: relative;
+}
+
+.Selectors {
+  height: 30%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.Controls {
+  height: 65%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
 }
 
 </style>

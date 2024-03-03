@@ -3,8 +3,10 @@
     <div class="green-screen">
       {{`Subdivision: 1/${currentSubdivision}`}}
     </div>
-    <div class="selector-up" @click="cycleForward"></div>
-    <div class="selector-down" @click="cycleBackward"></div>
+    <div class="selector-container">
+      <div class="selector-up" @click="cycleForward"></div>
+      <div class="selector-down" @click="cycleBackward"></div>
+    </div>
   </div>
 </template>
 
@@ -48,18 +50,16 @@ export default {
 }
 
 .sub-container {
-  width: 55%;
-  height: 20%;
-  display: flex;
+  top: 20%;
+  width: 38%;
+  height: 40%;
   position: relative;
-  top: 10%;
-  left: 25%;
   background-color: black;
 }
 
 .green-screen {
   font-family: 'DS-Digital', sans-serif;
-  font-size: 30px;
+  font-size: 100%;
   color: black;
   text-align: left;
   position: relative;
@@ -71,26 +71,31 @@ export default {
   border-radius: 8px;
 }
 
+.selector-container {
+  position: relative;
+  bottom: 80%;
+  left: 85%;
+  width: 80%;
+  height: 90%;
+  flex-direction: column;
+}
+
 .selector-up, .selector-down {
-  width: 0;
-  height: 0;
+  width: 1%;
   background-color: black;
   border-style: solid;
-
   cursor: pointer;
   border-radius: 5px;
+  border-color: transparent transparent darkgray transparent;
 }
 
 .selector-up {
   border-width: 0 10px 20px 10px;
-  position: relative;
-  top: 10%;
-  left: 10%;
-  border-color: transparent transparent darkgray transparent;
+  margin-bottom: 1%;
+
 }
 .selector-down {
   border-width: 20px 10px 0 10px;
-  position: relative;
   top: 55%;
   left: 1%;
   border-color: darkgray transparent transparent transparent;

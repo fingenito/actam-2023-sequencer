@@ -1,7 +1,7 @@
 <template>
   <div class="button-container">
     <button @click="toggleLed" :class="{ 'drum_pad': true, 'playing': isPlaying }">
-      <div :class="{ 'led-on': led_status, 'led-off': !led_status }"></div>
+      <div :class="{ 'led-on': led_status, 'led-off': !led_status }"/>
     </button>
   </div>
 </template>
@@ -67,6 +67,7 @@ export default {
 
 .led-on {
   background-color: red;
+  box-shadow: 0 0 5px 2px red;
 }
 
 .led-off {

@@ -1,7 +1,11 @@
 <template>
   <div class="playpause-container">
-    <button class="button-play" @click="togglePlay" :style="{ boxShadow: playButtonBoxShadow }">▶</button>
-    <button class="button-pause" @click="togglePause" :style="{ boxShadow: pauseButtonBoxShadow }">❚❚</button>
+    <div class="circle">
+      <button class="button-play" @click="togglePlay" :style="{ boxShadow: playButtonBoxShadow }">▶</button>
+    </div>
+    <div class="circle">
+      <button class="button-pause" @click="togglePause" :style="{ boxShadow: pauseButtonBoxShadow }">❚❚</button>
+    </div>
   </div>
 </template>
 
@@ -50,19 +54,23 @@ export default {
 <style scoped>
 .playpause-container {
   position: relative;
-  bottom: 5%;
-  left: 40%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 165px;
-  height: 35px;
+  top: 10%;
+  left: 10%;
+  width: 25%;
+  height: 15%;
+}
+
+.circle {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
 }
 
 .button-play,
 .button-pause {
-  width: 35px;
-  height: 35px;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   cursor: pointer;
   box-shadow: 0 0 10px, inset 0 0 50px rgba(0, 0, 0, 0.8);
