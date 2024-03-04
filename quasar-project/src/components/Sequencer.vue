@@ -4,26 +4,25 @@
 
     <div class="left">
       <div class="topleft-container">
-        <div class="visualizerContainer">
-          <Visualizer :main-volume="mainVolume" :color="color"/>
-        </div>
+<!--        <div class="visualizerContainer">-->
+<!--          <Visualizer :main-volume="mainVolume" :color="color"/>-->
+<!--        </div>-->
         <BPMSwing :bpm-value="bpm" :swing-value="swingValue" :main-volume="mainVolume" :color="color"/>
       </div>
 
       <div class="bottomleft-container">
         <div class="Selectors"> <!-- messo il div al posto della q-card per grafica -->
+          <!-- Kit selection -->
+          <selectKit :is-playing="playing" @stopLoop="stop" :kits="kits" @kitChange="changeKit"/>
 
-            <!-- Kit selection -->
-            <selectKit :is-playing="playing" @stopLoop="stop" :kits="kits" @kitChange="changeKit"/>
-
-            <!-- Subdivision selection -->
-            <SubdivisionSelection @subdivisionChange="changeSubdivision" :subdivisions="subdivisions"/>
+          <!-- Subdivision selection -->
+          <SubdivisionSelection @subdivisionChange="changeSubdivision" :subdivisions="subdivisions"/>
         </div>
 
         <div class="Controls">
             <!-- BPM slider -->
           <div class="control-container">
-            <q-slider class="BPMSlider" vertical v-model="bpm" :min="30" :max="300" :reverse="true"/>
+            <q-slider class="BPMSlider" vertical v-model="bpm" :min="30" :max="240" :reverse="true"/>
           </div>
 
             <!-- Swing slider -->
@@ -31,13 +30,13 @@
             <q-slider class="SwingSlider" vertical v-model="swingValue" :min="0" :max="1" :step="0.05" :reverse="true"/>
           </div>
 
-            <!-- Volume slider -->
-          <div class="control-container">
-            <q-slider class="VolumeSlider" vertical v-model="mainVolume.volume.value" :min="-40" :max="0" :step="4" :reverse="true"/>
-          </div>
+            <!-- Volume slider: TO BE REMOVED -->
+<!--          <div class="control-container">-->
+<!--            <q-slider class="VolumeSlider" vertical v-model="mainVolume.volume.value" :min="-40" :max="0" :step="4" :reverse="true"/>-->
+<!--          </div>-->
 
-            <!-- Play/pause buttons -->
-            <PlayPauseButton/>
+          <!-- Play/pause buttons -->
+          <PlayPauseButton/>
         </div>
 
       </div>
@@ -67,99 +66,97 @@
       <div class="bottomright-container">
         <!-- Effects section -->
         <div v-for="(row, sectionIndex) in rows">
-          <KnobSection :row="sectionIndex" :section-label="row.instrument" :update="updateEffects" @pitchZero="pitchZero"/>
+          <KnobSection :row="sectionIndex" :section-label="row.instrument" :update="updateEffects"/>
         </div>
       </div>
     </div>
+  </div>
 
   <!-- Impostazione nico -->
-<!--  <div>
-    <q-card class="card">
-      <q-card-section>
-        <div class="row q-justify-between" v-for="(row,rowIndex) in rows" :key="row.id">
-          <q-card-section horizontal>
-            &lt;!&ndash; Row labels &ndash;&gt;
-            <div class="col flex justify-center">
-              <Displays1 :displayText="row.instrument"/>
-            </div>
+<!--  <div>-->
+<!--    <q-card class="card">-->
+<!--      <q-card-section>-->
+<!--        <div class="row q-justify-between" v-for="(row,rowIndex) in rows" :key="row.id">-->
+<!--          <q-card-section horizontal>-->
+<!--            &lt;!&ndash; Row labels &ndash;&gt;-->
+<!--            <div class="col flex justify-center">-->
+<!--              <Displays1 :displayText="row.instrument"/>-->
+<!--            </div>-->
 
-            &lt;!&ndash; Sequencer buttons &ndash;&gt;
-            <div class="col flex justify-center" v-for="(button,colIndex) in row.buttons" :key="button.id" >
-              <div>
-                <Buttons1 class="q-ma-md" @click="toggleButton(rowIndex,colIndex)" :isPlaying="playing && colIndex === beat"></Buttons1>
-              </div>
-            </div>
+<!--            &lt;!&ndash; Sequencer buttons &ndash;&gt;-->
+<!--            <div class="col flex justify-center" v-for="(button,colIndex) in row.buttons" :key="button.id" >-->
+<!--              <div>-->
+<!--                <Buttons1 class="q-ma-md" @click="toggleButton(rowIndex,colIndex)" :isPlaying="playing && colIndex === beat"></Buttons1>-->
+<!--              </div>-->
+<!--            </div>-->
 
-            &lt;!&ndash; ON/OFF buttons &ndash;&gt;
-            <q-card-section>
-              <simple-button :row-index="rowIndex" class="q-ma-sm" @turnOn="turnOn" @turnOff="turnOff"></simple-button>
-            </q-card-section>
-          </q-card-section>
-        </div>
-        <q-separator vertical/>
-        &lt;!&ndash; Waveform &ndash;&gt;
-        <div class="visualizerContainer">
-          <Visualizer :main-volume="mainVolume" :color="color"/>
-        </div>
-      </q-card-section>
-
-&lt;!&ndash;       Play and pause buttons&ndash;&gt;
-      <q-card-section>
-        <PlayPauseButton @startSeq = "play" @pauseSeq = "stop" :is-playing="playing"/>
-      </q-card-section>
+<!--            &lt;!&ndash; ON/OFF buttons &ndash;&gt;-->
+<!--            <q-card-section>-->
+<!--              <simple-button :row-index="rowIndex" class="q-ma-sm" @turnOn="turnOn" @turnOff="turnOff"></simple-button>-->
+<!--            </q-card-section>-->
+<!--          </q-card-section>-->
+<!--        </div>-->
+<!--      </q-card-section>-->
+<!--      &lt;!&ndash; Waveform &ndash;&gt;-->
+<!--      <div class="visualizerContainer">-->
+<!--        <Visualizer :main-volume="mainVolume" :color="color"/>-->
+<!--      </div>-->
+<!--      &lt;!&ndash; Play and pause buttons &ndash;&gt;-->
+<!--      <q-card-section>-->
+<!--        <PlayPauseButton @startSeq = "play" @pauseSeq = "stop" :is-playing="playing"/>-->
+<!--      </q-card-section>-->
 
 
-&lt;!&ndash;       Sliders&ndash;&gt;
-      <q-card class="my-card" flat bordered>
-        <q-card-section horizontal>
+<!--      &lt;!&ndash; Sliders &ndash;&gt;-->
+<!--      <q-card class="my-card" flat bordered>-->
+<!--        <q-card-section horizontal>-->
 
-          &lt;!&ndash; BPM slider &ndash;&gt;
-          <q-card-section>
-            <q-badge>BPM</q-badge>
-            <q-slider v-model="bpm" :min="30" :max="300" style="width: 250px"/>
-          </q-card-section>
+<!--          &lt;!&ndash; BPM slider &ndash;&gt;-->
+<!--          <q-card-section>-->
+<!--            <q-badge>BPM</q-badge>-->
+<!--            <q-slider v-model="bpm" :min="30" :max="300" style="width: 250px"/>-->
+<!--          </q-card-section>-->
 
-          <q-separator vertical />
+<!--          <q-separator vertical />-->
 
-          &lt;!&ndash; Swing slider &ndash;&gt;
-          <q-card-section>
-            <q-badge>Swing</q-badge>
-            <q-slider v-model="swingValue" :min="0" :max="1" :step="0.05" style="width: 250px"/>
-          </q-card-section>
+<!--          &lt;!&ndash; Swing slider &ndash;&gt;-->
+<!--          <q-card-section>-->
+<!--            <q-badge>Swing</q-badge>-->
+<!--            <q-slider v-model="swingValue" :min="0" :max="1" :step="0.05" style="width: 250px"/>-->
+<!--          </q-card-section>-->
 
-          <q-separator vertical />
+<!--          <q-separator vertical />-->
 
-          &lt;!&ndash; Volume slider &ndash;&gt;
-          <q-card-section>
-            <q-badge>Volume</q-badge>
-            <q-slider v-model="mainVolume.volume.value" :min="-40" :max="0" :step="4" style="width: 250px"/>
-          </q-card-section>
+<!--          &lt;!&ndash; Volume slider &ndash;&gt;-->
+<!--          <q-card-section>-->
+<!--            <q-badge>Volume</q-badge>-->
+<!--            <q-slider v-model="mainVolume.volume.value" :min="-40" :max="0" :step="4" style="width: 250px"/>-->
+<!--          </q-card-section>-->
 
-        </q-card-section>
-      </q-card>
+<!--        </q-card-section>-->
+<!--      </q-card>-->
 
-&lt;!&ndash;       Effects section&ndash;&gt;
-      <q-card-section horizontal>
-        <div v-for="(row, sectionIndex) in rows">
-          <KnobSection :row="sectionIndex" :section-label="row.instrument" :update="updateEffects" @pitchZero="pitchZero"/>
-        </div>
-      </q-card-section>
+<!--      &lt;!&ndash; Effects section &ndash;&gt;-->
+<!--      <q-card-section horizontal>-->
+<!--        <div v-for="(row, sectionIndex) in rows">-->
+<!--          <KnobSection :row="sectionIndex" :section-label="row.instrument" :update="updateEffects"/>-->
+<!--        </div>-->
+<!--      </q-card-section>-->
 
-      &lt;!&ndash; Kit selection &ndash;&gt;
-      <q-card-section horizontal>
 
-        <q-card-section>
-          <selectKit :is-playing="playing" @stopLoop="stop" :kits="kits" @kitChange="changeKit"/>
-        </q-card-section>
+<!--      <q-card-section horizontal>-->
+<!--        &lt;!&ndash; Kit selection &ndash;&gt;-->
+<!--        <q-card-section>-->
+<!--          <selectKit :is-playing="playing" @stopLoop="stop" :kits="kits" @kitChange="changeKit" @pauseSeq = "stop"/>-->
+<!--        </q-card-section>-->
 
-        &lt;!&ndash; Subdivision selection &ndash;&gt;
-        <q-card-section>
-          <SubdivisionSelection @subdivisionChange="changeSubdivision" :subdivisions="subdivisions"/>
-        </q-card-section>
-      </q-card-section>
-    </q-card>
-  </div>-->
-  </div>
+<!--        &lt;!&ndash; Subdivision selection &ndash;&gt;-->
+<!--        <q-card-section>-->
+<!--          <SubdivisionSelection @subdivisionChange="changeSubdivision" :subdivisions="subdivisions"/>-->
+<!--        </q-card-section>-->
+<!--      </q-card-section>-->
+<!--    </q-card>-->
+<!--  </div>-->
 </template>
 
 <script>
@@ -173,16 +170,10 @@ import SimpleButton from "components/SimpleButton.vue";
 import BPMSwing from "components/BPMSwing.vue";
 import selectKit from "components/KitSelection.vue";
 import SubdivisionSelection from "components/SubdivisionSelection.vue";
-import CoolSlider from "components/CoolSlider.vue";
 import Knob from "components/Knob.vue";
 import KnobSection from "components/KnobsFX.vue";
 import Subdivision from "components/KitSelection.vue";
 import Section2 from "components/EffectSection/Section2.vue";
-import Section1 from "components/EffectSection/Section1.vue";
-import Section3 from "components/EffectSection/Section3.vue";
-import Section4 from "components/EffectSection/Section4.vue";
-import Buttons from "components/Buttons.vue";
-import Section5 from "components/EffectSection/Section5.vue";
 import Displays from "components/Displays.vue";
 import {Analyser} from "tone";
 import Visualizer from "components/Visualizer.vue";
@@ -191,11 +182,11 @@ export default defineComponent({
 
   components: {
     Visualizer,
-    Displays, Section5, Buttons, Section4, Section3, Section1, Section2,
+    Displays,
     Subdivision,
     KnobSection,
     SubdivisionSelection,
-    selectKit, BPMSwing, SimpleButton, Displays1, PlayPauseButton, Buttons1, CoolSlider, Knob
+    selectKit, BPMSwing, SimpleButton, Displays1, PlayPauseButton, Buttons1, Knob
   },
 
   setup(){
@@ -214,12 +205,17 @@ export default defineComponent({
 
 
     const kits = ['808', 'hiphop', '8bit'];
-    const instruments = ['kick','hihat','snare', 'openhat', 'perc'];
+    // const instruments = ['kick','hihat','snare', 'openhat', 'perc'];
+    const instruments = ['kick','hihat','snare', 'openhat'];
     const subdivisions = ['4', '8', '16'];
 
     const selectedNoteLength = ref(subdivisions[0]);
     const selectedKit = ref(kits[0]);
     const [pitchShifts, delays, reverbs, phasers, gains] = Sequencer.configFX(instruments.length);
+    // const myPlayers = new Tone.Players()
+
+    // const myPlayers = Sequencer.configPlayers(instruments, kits[0], pitchShifts, delays, reverbs, );
+    // Sequencer.configPlayers(myPlayers, instruments, kits[0], pitchShifts, delays, reverbs, phasers, gains, mainVolume, 1);
 
     // Creates set of players containing sounds for each kit
     kits.forEach((kit) =>{
@@ -319,18 +315,21 @@ export default defineComponent({
       subdivisions,
       selectedKit,
       currentPlayers,
-      color
+      color,
+      instruments,
+      // myPlayers
     }
   },
   methods: {
     changeSubdivision(newSubdivision){
       this.selectedNoteLength = newSubdivision;
-      // console.log("selectedNoteLength", this.selectedNoteLength);
     },
-    changeKit(newKit){
+
+    changeKit(newKit) {
       this.selectedKit = newKit;
-      console.log("selectedKit", selectKit);
+      console.log("selectedKit", this.selectedKit);
     },
+
     updateEffects(index, pitchValue, phaserValue, reverbValue, delayValue){
       this.pitchShifts[index].pitch = pitchValue;
       this.delays[index].wet.value = delayValue;
@@ -345,11 +344,6 @@ export default defineComponent({
       console.log("Turn off row", row)
       this.gains[row].gain.value = 0;
     },
-    pitchZero(row){
-      let newPitch = 0;
-      this.updateEffects(row, newPitch, this.delays[row].wet.value, this.phasers[row].wet.value, this.reverbs[row].wet.value)
-      console.log("pitchZero row", row)
-    }
   }
 })
 
@@ -357,7 +351,7 @@ export default defineComponent({
 
 <style>
 body {
-  background-color: #8aff92;
+  background-color: #75cc7c;
 }
 
 .page-container {

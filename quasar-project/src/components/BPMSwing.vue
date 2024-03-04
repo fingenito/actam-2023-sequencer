@@ -1,11 +1,8 @@
 <template>
   <div class="screens-container">
-
     <Visualizer :main-volume="mainVolume" :color="color"/>
-
     <div class="screen-text">BPM: {{ bpmValue }}</div>
     <div class="screen-text">SWING: {{ Math.trunc(swingValue * 100) }}%</div>
-    <div class="screen-text">VOLUME: {{mainVolume.volume.value}}dB</div>
   </div>
 </template>
 
@@ -56,6 +53,10 @@ export default {
   height: 100%;
   background-color: black;
   color: white;
+  text-align: center;
+}
+
+.visualizer-container {
   text-align: center;
 }
 

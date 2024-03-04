@@ -2,7 +2,9 @@
   <q-page>
     <div class="q-pa-md">
       <div v-if="!started">
-        <q-btn label="start" @click="start"></q-btn>
+        <div class="center-container">
+          <q-btn label="start" @click="start"></q-btn>
+        </div>
       </div>
       <div v-else>
         <sequencer-comp></sequencer-comp>
@@ -39,3 +41,12 @@ export default defineComponent({
   }
 })
 </script>
+
+<style scoped>
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Ensure the container takes the full height of the viewport */
+}
+</style>

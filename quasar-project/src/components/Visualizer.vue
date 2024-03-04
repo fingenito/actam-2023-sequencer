@@ -31,7 +31,7 @@ export default {
   setup(props) {
     const visualizerCanvas = ref(null);
 
-    const waveform = new Tone.Waveform()
+    const waveform = new Tone.Waveform(128);
     props.mainVolume.connect(waveform);
     //waveform.toDestination()
     const screenContainer = ref(null);

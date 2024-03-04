@@ -3,24 +3,18 @@ import * as Tone from "tone";
 class Sequencer{
   static players;
   static kits;
-  static instruments;
+  static seqInstruments;
   static rows;
   static subdivisions;
-
-  // static pitchShifts;
-  // static phasers;
-  // static delays;
-  // static reverbs;
-  // static gains;
-  // static masterVolume;
 
   // Initializes variables
   static initSequencer(){
     // this.players = new Map();
     // this.kits = ['808', 'hiphop', '8bit'];
-    this.instruments = ['kick','hihat','snare', 'openhat', 'perc']; /* Add clap/other sounds? */
+    // this.instruments = ['kick','hihat','snare', 'openhat', 'perc']; /* Add clap/other sounds? */
+    this.seqInstruments = ['kick','hihat','snare', 'openhat'];
     // this.subdivisions = ['4', '8', '16']
-    this.rows = this.makeGrid(this.instruments);
+    this.rows = this.makeGrid(this.seqInstruments);
 
     // Initializes effects
     // this.configFX();
@@ -41,8 +35,6 @@ class Sequencer{
 
   // Creates rows of buttons
   static makeGrid (instruments){
-    // console.log('makeGrid',instruments)
-
     const rows = []
 
     for (const instr in instruments) {
@@ -62,6 +54,18 @@ class Sequencer{
     return rows;
   };
 
+  // Disposes players
+  // static disposePlayers(players) {
+  //   // Dispose of all players
+  //   for (const player in players._players) {
+  //     if (players._players.hasOwnProperty(player)) {
+  //       players._players[player].dispose();
+  //     }
+  //   }
+  //   // Clear the players object
+  //   players.dispose();
+  // }
+
   // Initializes effects
   static configFX(numInstr){
     const pitchShifts = [];
@@ -69,8 +73,6 @@ class Sequencer{
     const delays = [];
     const reverbs = [];
     const gains = [];
-    // this.volumes = [];
-    // const masterVolume = new Tone.Volume(0)
 
     for(let i = 0; i < numInstr; i++){
       const ps = new Tone.PitchShift();
@@ -98,10 +100,18 @@ class Sequencer{
     return [pitchShifts, delays, reverbs, phasers, gains]
   }
 
-  // Toggles button in position (row, col)
-  // static toggle(row, col, value){
-  //   this.rows[row].buttons[col].isActive = value
-  // }
+  static configPlayers(players, instruments, kit, pitchShifts, phasers, delays, reverbs, gains, mainVolume, init){
+    instruments.forEach((instr, index) => {
+      players.add(instr, "src/assets/samples/" + kit + "/" + instr + ".wav");
+      console.log("Added player:", instr);
+      players.player(instr).chain(pitchShifts[index], phasers[index], delays[index], reverbs[index],
+        gains[index], mainVolume, Tone.Destination);
+      if(!init){
+        players.player(instr).load();
+      }
+    })
+    console.log("(configPlayers) Players successfully added");
+  }
 
   // Returns this.rows
   static getRows(){
@@ -126,16 +136,5 @@ class Sequencer{
     return this.players
   }
 
-  // Starts loop
-  // static createLoop(time, beat) {
-  //   this.rows.forEach((row,index) => {
-  //     const instrument = this.players.get(row.instrument)
-  //     const active = row.buttons[beat].isActive
-  //     if(active){
-  //       // console.log('createLoop beat', beat)
-  //       instrument.start(time + 0.05, 0, '4n')
-  //     }
-  //   })
-  // };
 }
 export default Sequencer
