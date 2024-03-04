@@ -1,16 +1,35 @@
 <template>
   <div class="screens-container">
-    <div class="screen1">BPM: {{ bpmValue }}</div>
-    <div class="screen2">SWING: {{ swingValue }}%</div>
+
+    <Visualizer :main-volume="mainVolume" :color="color"/>
+
+    <div class="screen-text">BPM: {{ bpmValue }}</div>
+    <div class="screen-text">SWING: {{ Math.trunc(swingValue * 100) }}%</div>
+    <div class="screen-text">VOLUME: {{mainVolume.volume.value}}dB</div>
   </div>
 </template>
 
 <script>
+import Visualizer from "components/Visualizer.vue";
 export default {
   name: 'BPMSwing',
   props: {
-    bpmValue: null,
-    swingValue: null
+    bpmValue: {
+      type: Number
+    },
+    swingValue: {
+      type: Number
+    },
+    mainVolume: {
+      type: Object,
+      required: true
+    },
+    color: {
+      type: String
+    }
+  },
+  components:{
+    Visualizer
   }
 }
 </script>
@@ -30,7 +49,7 @@ export default {
   height: 23%;
 }
 
-.screen1, .screen2 {
+.screen-text {
   font-family: 'DS-Digital', sans-serif;
   font-size: 20px;
   width: 100%;
