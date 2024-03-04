@@ -1,5 +1,5 @@
 <template>
-  <q-card class="my-card" flat bordered>
+  <q-card class="my-card">
     <q-card-section horizontal>
       <q-badge :label="sectionLabel"/>
     </q-card-section>
@@ -156,5 +156,11 @@ export default {
 </script>
 
 <style>
-
+.my-card {
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  background: transparent;
+  border: 1px solid #000;
+}
 </style>

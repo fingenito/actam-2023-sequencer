@@ -55,16 +55,17 @@ export default {
 
 .sub-container {
   top: 20%;
-  width: 38%;
-  height: 40%;
+  width: 40%;
+  height: 55%;
   right: 5%;
   position: relative;
   background-color: black;
+  border-radius: 8px;
 }
 
 .green-screen {
   font-family: 'DS-Digital', sans-serif;
-  font-size: 100%;
+  font-size: 125%;
   color: black;
   text-align: left;
   position: relative;
@@ -77,8 +78,8 @@ export default {
 }
 
 .selector-container {
-  position: absolute;
-  bottom: 5%;
+  position: relative;
+  bottom: 70%;
   left: 85%;
   width: 10%;
   height: 90%;
@@ -86,6 +87,7 @@ export default {
 }
 
 .selector-up, .selector-down {
+  width: 1%;
   background-color: black;
   border-style: solid;
   cursor: pointer;
@@ -95,11 +97,11 @@ export default {
 }
 
 .selector-up {
-  border-width: 0 10px 20px 10px;
+  border-width: 0 7px 14px 7px;
   margin-bottom: 10%;
 }
 .selector-down {
-  border-width: 20px 10px 0 10px;
+  border-width: 14px 7px 0 7px;
   top: 55%;
   left: 1%;
   border-color: darkgray transparent transparent transparent;

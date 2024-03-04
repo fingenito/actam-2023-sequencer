@@ -31,17 +31,17 @@ export default {
   position: relative;
   display: flex;
   flex-direction: row;
+  height: 50%;
+  width: 50%;
 }
 
 .drum_pad {
   position: relative;
   top: 20%;
-  width: 50px;
-  height: 50px;
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
-  font-weight: bold;
   border-radius: 8px;
   cursor: pointer;
   background-color: black;
@@ -58,10 +58,10 @@ export default {
 
 .led-on, .led-off {
   position: relative;
-  bottom: 30%;
+  top: 10%;
   left: 35%;
-  width: 10px;
-  height: 10px;
+  width: 25%;
+  height: 20%;
   border-radius: 50%;
 }
 

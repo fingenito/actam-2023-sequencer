@@ -51,7 +51,7 @@ export default {
 
 .screen-text {
   font-family: 'DS-Digital', sans-serif;
-  font-size: 20px;
+  font-size: 100%;
   width: 100%;
   height: 100%;
   background-color: black;

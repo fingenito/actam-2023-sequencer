@@ -54,7 +54,7 @@ export default {
 <style scoped>
 .playpause-container {
   position: relative;
-  top: 10%;
+  top: 70%;
   left: 10%;
   width: 25%;
   height: 15%;
@@ -63,14 +63,14 @@ export default {
 .circle {
   position: relative;
   display: inline-block;
-  width: 100%;
-  height: 100%;
+  width: 50%;
+  height: 200%;
 }
 
 .button-play,
 .button-pause {
-  width: 100%;
-  height: 100%;
+  width: 75%;
+  height: 75%;
   border-radius: 50%;
   cursor: pointer;
   box-shadow: 0 0 10px, inset 0 0 50px rgba(0, 0, 0, 0.8);
