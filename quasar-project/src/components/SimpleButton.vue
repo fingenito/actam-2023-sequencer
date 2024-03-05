@@ -34,7 +34,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .simple-button {
   position: relative;
   left: 60%;

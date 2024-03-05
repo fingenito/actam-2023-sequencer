@@ -1,23 +1,24 @@
 <template>
   <q-card class="my-card">
-    <q-card-section horizontal>
-      <q-badge :label="sectionLabel"/>
-    </q-card-section>
-    <q-card-section>
+    <div class="title-container">
+      <label>{{ sectionLabel }}</label>
+    </div>
+    <q-card-section class="knob-container">
       <div>
         <q-card-section horizontal>
-          <q-badge class="q-mr-md q-mb-md">Pitch</q-badge>
-          <q-badge class="q-ml-md q-mb-md">Phaser</q-badge>
+          <label class="labels-left">PITCH</label>
+          <label class="labels-right">PHASER</label>
         </q-card-section>
 
         <q-card-section horizontal>
           <!-- Pitch knob -->
           <q-knob
+            size="300%"
             show-value
             :min="0"
             :max="20"
             :step="1"
-            font-size="12px"
+            font-size="30%"
             v-model="pitchValue"
             :thickness="0.22"
             color="blue"
@@ -33,8 +34,9 @@
 
           <!-- Phaser knob -->
           <q-knob
+            size="300%"
             show-value
-            font-size="12px"
+            font-size="30%"
             :min="0"
             :max="1"
             :step="0.01"
@@ -51,15 +53,16 @@
         </q-card-section>
 
         <q-card-section horizontal>
-          <q-badge class="q-mr-md q-mb-md">Delay</q-badge>
-          <q-badge class="q-ml-md q-mb-md">Reverb</q-badge>
+          <label class="labels-left">DELAY</label>
+          <label class="labels-right">REVERB</label>
         </q-card-section>
 
         <q-card-section horizontal>
           <!-- Delay knob -->
           <q-knob
+            size="300%"
             show-value
-            font-size="12px"
+            font-size="30%"
             v-model="delayValue"
             :thickness="0.22"
             :min="0"
@@ -78,8 +81,9 @@
 
           <!-- Reverb knob -->
           <q-knob
+            size="300%"
             show-value
-            font-size="12px"
+            font-size="30%"
             v-model="reverbValue"
             :thickness="0.22"
             :min="0"
@@ -159,8 +163,40 @@ export default {
 .my-card {
   width: 100%;
   height: 100%;
-  max-height: 100%;
   background: transparent;
-  border: 1px solid #000;
+  display: flex;
 }
+
+.knob-container {
+  position: relative;
+  display: flex;
+  height: 100%;
+  width: 80%;
+}
+
+.labels-left {
+  font-size: 50%;
+  color: black;
+  margin-left: 9%;
+  font-weight: bold;
+}
+
+.labels-right {
+  font-size: 50%;
+  color: black;
+  margin-left: 45%;
+  font-weight: bold;
+}
+
+.title-container {
+  width: 20%;
+  display: flex;
+  position: relative;
+  writing-mode: vertical-lr;
+  text-orientation: upright;
+  align-items: center;
+  justify-content: center;
+}
+
+
 </style>
