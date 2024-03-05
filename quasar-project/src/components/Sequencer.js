@@ -100,18 +100,21 @@ class Sequencer{
     return [pitchShifts, delays, reverbs, phasers, gains]
   }
 
-  static configPlayers(players, instruments, kit, pitchShifts, phasers, delays, reverbs, gains, mainVolume, init){
-    instruments.forEach((instr, index) => {
-      players.add(instr, "src/assets/samples/" + kit + "/" + instr + ".wav");
-      console.log("Added player:", instr);
-      players.player(instr).chain(pitchShifts[index], phasers[index], delays[index], reverbs[index],
-        gains[index], mainVolume, Tone.Destination);
-      if(!init){
-        players.player(instr).load();
-      }
-    })
-    console.log("(configPlayers) Players successfully added");
-  }
+  // static configPlayers(players, instruments, previousKit, kit, pitchShifts, phasers, delays, reverbs, gains, mainVolume, init) {
+  //   if (init === 0) {
+  //     instruments.forEach((instr) => {
+  //       players.player(instr + '_' + previousKit).dispose();
+  //     })
+  //   }
+  //   instruments.forEach((instr, index) => {
+  //     players.add(instr + '_' + kit, "src/assets/samples/" + kit + "/" + instr + ".wav");
+  //     console.log("Added player:", instr);
+  //     players.player(instr + '_' + kit).chain(pitchShifts[index], phasers[index], delays[index], reverbs[index],
+  //       gains[index], mainVolume, Tone.Destination);
+  //
+  //   })
+  //   console.log("(configPlayers) Players successfully added");
+  // }
 
   // Returns this.rows
   static getRows(){
