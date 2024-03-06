@@ -31,15 +31,17 @@ export default {
   position: relative;
   display: flex;
   flex-direction: row;
-  height: 50%;
-  width: 50%;
+  height: 100%;
+  width: 100%;
+  bottom: 20%;
+  right: 20%;
 }
 
 .drum_pad {
   position: relative;
-  top: 20%;
-  width: 100%;
-  height: 100%;
+  width: 75%;
+  height: 90%;
+  bottom: 15%;
   display: flex;
   justify-content: center;
   border-radius: 8px;
@@ -60,7 +62,7 @@ export default {
   position: relative;
   top: 10%;
   left: 35%;
-  width: 25%;
+  width: 30%;
   height: 20%;
   border-radius: 50%;
 }

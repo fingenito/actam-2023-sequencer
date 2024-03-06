@@ -1,7 +1,7 @@
 <template>
   <div class="display-container">
     <div class="display-content">
-      <p>{{displayText}}</p>
+      <label>{{displayText}}</label>
     </div>
   </div>
 </template>
@@ -24,19 +24,24 @@ export default {
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 2px 4px rgba(255, 255, 255, 0.51);
-  width: 120px;
-  height: 50px;
+  width: 100%;
+  height: 110%;
   background: linear-gradient(to bottom right, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0.55) 100%), rgb(246, 246, 246);
-  align-content: center;
 }
 
 .display-content {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-family: 'DS-Digital', sans-serif;
-  text-align: center;
-  font-size: 16px;
+  font-size: 100%;
+  position: relative;
 }
-.display-content p{
+
+.display-content label{
   color: #dcdcdc;
+
 }
 </style>
 

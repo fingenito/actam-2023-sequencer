@@ -50,8 +50,12 @@
               <!-- Sequencer buttons -->
               <div class="col flex justify-center" v-for="(button,colIndex) in row.buttons" :key="button.id" >
                 <div>
-                  <Buttons1 class="q-ma-md" @click="toggleButton(rowIndex,colIndex)" :isPlaying="playing && colIndex === beat"></Buttons1>
+                  <Buttons1 class="q-ma-md" @click="toggleButton(rowIndex,colIndex)" :isPlaying="playing && colIndex === beat"/>
                 </div>
+              </div>
+              <div class="col flex justify-center">
+                <!-- ON/OFF buttons -->
+                <simple-button :row-index="rowIndex" class="q-ma-sm" @turnOn="turnOn" @turnOff="turnOff"/>
               </div>
             </div>
 
@@ -390,8 +394,7 @@ body {
   width: 100%;
   overflow: hidden;
   flex-direction: column;
-  display: flex;
-
+  margin-left: 1%;
 }
 .bottomright-container {
   height: 30%;
@@ -445,8 +448,10 @@ body {
 .buttonRow {
   display: flex;
   flex-direction: row;
-  height: 25%;
+  height: 100%;
   width: 100%;
+  margin-top: 2%;
+  margin-bottom: 3%;
 }
 
 </style>

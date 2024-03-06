@@ -1,6 +1,6 @@
 <template>
   <button class="simple-button" @click="changeState">
-    <div class="led" :class="{ 'led-on': isOn}"></div>
+    <div class="simple-led" :class="{ 'simple-led-on': isOn}"></div>
   </button>
 </template>
 
@@ -36,20 +36,16 @@ export default {
 
 <style scoped>
 .simple-button {
-  position: relative;
-  left: 60%;
   display: flex;
-  align-items: center;
+  position: relative;
   justify-content: center;
-  height: 30px;
-  width: 30px;
+  height: 55%;
+  width: 30%;
   border-radius: 8px;
   border: 2px solid #090909;
-  background-color: transparent;
   background-image: linear-gradient(145deg, #171717, #6d6b6e);
   box-shadow: inset 1px 1px 0 #7d7c7e, inset -1px -1px 0 #1c1c1c;
   cursor: pointer;
-  margin-left: 5px;
   transition: box-shadow 0.3s ease; /* Aggiunto il trasferimento per un effetto più fluido */
 }
 
@@ -57,18 +53,21 @@ export default {
   box-shadow: inset 3px 3px 5px #7d7c7e, inset -3px -3px 5px #1c1c1c;
 }
 
-.led {
-  position: relative;
-  left: 85%;
-  bottom: 10%;
-  width: 8px;
-  height: 8px;
+.simple-led {
+  position: absolute;
+  display: flex;
+  left: 140%;
+  top: 30%;
+  width: 35%;
+  height: 40%;
   border-radius: 50%;
   background-color: darkred;
 }
 
-.led-on {
+.simple-led-on {
   background-color: red;
+  box-shadow: 0 0 5px 2px red;
+
 }
 
 </style>
