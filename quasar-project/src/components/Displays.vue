@@ -1,5 +1,5 @@
 <template>
-  <div class="display-container q-mt-md">
+  <div class="display-container">
     <div class="display-content">
       <p>{{displayText}}</p>
     </div>
@@ -31,7 +31,6 @@ export default {
 }
 
 .display-content {
-  padding: 16px;
   font-family: 'DS-Digital', sans-serif;
   text-align: center;
   font-size: 16px;

@@ -54,8 +54,7 @@
                 </div>
               </div>
             </div>
-            <!-- ON/OFF buttons -->
-            <simple-button :row-index="rowIndex" class="q-ma-sm" @turnOn="turnOn" @turnOff="turnOff"></simple-button>
+
           </div>
       </div>
       <div class="bottomright-container">
@@ -390,9 +389,9 @@ body {
   height: 70%;
   width: 100%;
   overflow: hidden;
-  float: right;
-  flex-direction: row;
+  flex-direction: column;
   display: flex;
+
 }
 .bottomright-container {
   height: 30%;
@@ -442,4 +441,12 @@ body {
   display: flex;
   position: relative;
 }
+
+.buttonRow {
+  display: flex;
+  flex-direction: row;
+  height: 25%;
+  width: 100%;
+}
+
 </style>
