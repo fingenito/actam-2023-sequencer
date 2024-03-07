@@ -31,7 +31,7 @@
           </div>
 
           <!-- Play/pause buttons -->
-          <PlayPauseButton/>
+          <PlayPauseButton @startSeq = "play" @pauseSeq = "stop" :is-playing="playing"/>
         </div>
 
       </div>
@@ -164,17 +164,16 @@ import {defineComponent, onMounted, reactive, ref, toRaw, watch, watchEffect} fr
 import Buttons1 from "components/Buttons.vue";
 import PlayPauseButton from "components/PlayPauseButton.vue";
 import Displays1 from "components/Displays.vue";
+import Displays from "components/Displays.vue";
 import SimpleButton from "components/SimpleButton.vue";
 import BPMSwing from "components/BPMSwing.vue";
 import selectKit from "components/KitSelection.vue";
+import Subdivision from "components/KitSelection.vue";
 import SubdivisionSelection from "components/SubdivisionSelection.vue";
 import Knob from "components/Knob.vue";
 import KnobSection from "components/KnobsFX.vue";
-import Subdivision from "components/KitSelection.vue";
-import Section2 from "components/EffectSection/Section2.vue";
-import Displays from "components/Displays.vue";
-import {Analyser} from "tone";
 import Visualizer from "components/Visualizer.vue";
+
 export default defineComponent({
   name : 'SequencerComp',
 
@@ -231,7 +230,6 @@ export default defineComponent({
       beat.value = (beat.value + 1) % 8;
       toRaw(rows).forEach((row) => {
         const instrument = currentPlayers.player(toRaw(row).instrument)
-        // const instrument = myPlayers.player(toRaw(row).instrument + '_' + selectedKit.value);
         const active = toRaw(row).buttons[beat.value].isActive
         if(active){
           instrument.start(time);
@@ -280,8 +278,8 @@ export default defineComponent({
     // Plays pattern by calling loop function
     const play = () => {
       playing.value = true;
-      loop.start("8n") // delayed by 8n to avoid time misalignment
       Tone.Transport.start()
+      loop.start("8n") // delayed by 8n to avoid time misalignment
     }
 
     // Stops loop
@@ -356,7 +354,7 @@ body {
 
 .page-container {
   width: 98%;
-  background: lightgray;
+  background: #fdeedf;
   border-radius: 50px;
   padding: 2%; /* Regola la dimensione del margine sfumato interno */
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.8), inset 0 0 50px rgba(80, 80, 80, 50);
@@ -420,7 +418,7 @@ body {
   width: 17%;
 }
 
-.BPMSlider, .SwingSlider, .VolumeSlider{
+.BPMSlider, .SwingSlider {
   height: 90%;
   top: 5%;
   left: 5%;

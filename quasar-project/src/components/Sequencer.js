@@ -3,7 +3,7 @@ import * as Tone from "tone";
 class Sequencer{
   static players;
   static kits;
-  static seqInstruments;
+  static instruments;
   static rows;
   static subdivisions;
 
