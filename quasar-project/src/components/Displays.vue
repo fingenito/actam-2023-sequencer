@@ -23,10 +23,10 @@ export default {
 .display-container {
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 2px 4px rgba(255, 255, 255, 0.51);
   width: 100%;
   height: 110%;
   background: linear-gradient(to bottom right, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0.55) 100%), rgb(246, 246, 246);
+  box-shadow: 4px 4px 4px #666;
 }
 
 .display-content {

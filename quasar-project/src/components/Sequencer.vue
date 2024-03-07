@@ -4,9 +4,9 @@
 
     <div class="left">
       <div class="topleft-container">
-<!--        <div class="visualizerContainer">-->
-<!--          <Visualizer :main-volume="mainVolume" :color="color"/>-->
-<!--        </div>-->
+        <div class="visualizerContainer">
+          <Visualizer :main-volume="mainVolume" :color="color"/>
+        </div>
         <BPMSwing :bpm-value="bpm" :swing-value="swingValue" :main-volume="mainVolume" :color="color"/>
       </div>
 
@@ -375,6 +375,8 @@ body {
   border-radius: 10% 0 0 10%;
   background-color: #000000;
   overflow: hidden;
+  box-shadow: 4px 4px 4px #666;
+
 }
 
 .bottomleft-container {
@@ -436,6 +438,7 @@ body {
 .visualizerContainer {
   height: 20%;
   width: 25%;
+  display: flex;
 }
 
 .Effects {

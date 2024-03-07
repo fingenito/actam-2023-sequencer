@@ -56,6 +56,7 @@ export default {
   position: relative;
   background-color: black;
   border-radius: 8px;
+  box-shadow: 4px 4px 4px #666;
 }
 
 .green-screen {

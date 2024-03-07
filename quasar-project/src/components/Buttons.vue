@@ -48,6 +48,8 @@ export default {
   cursor: pointer;
   background-color: black;
   transition: box-shadow 0.3s ease, background-color 0.3s ease; /* Aggiunto il trasferimento per un effetto più fluido */
+  box-shadow: 2px 2px 2px #666;
+
 }
 
 .drum_pad.playing {

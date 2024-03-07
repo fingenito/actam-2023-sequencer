@@ -1,6 +1,6 @@
 <template>
   <div class="screens-container">
-    <Visualizer :main-volume="mainVolume" :color="color"/>
+<!--    <Visualizer :main-volume="mainVolume" :color="color"/>-->
     <div class="screen-text">BPM: {{ bpmValue }}</div>
     <div class="screen-text">SWING: {{ Math.trunc(swingValue * 100) }}%</div>
   </div>
@@ -38,7 +38,7 @@ export default {
 }
 .screens-container {
   position: relative;
-  top: 85%;
+  top: 65%;
   display: flex;
   flex-direction: row;
   align-items: center;

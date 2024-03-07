@@ -61,7 +61,9 @@ export default {
   position: relative;
   background-color: black;
   border-radius: 8px;
+  box-shadow: 4px 4px 4px #666;
 }
+
 
 .green-screen {
   font-family: 'DS-Digital', sans-serif;
@@ -100,6 +102,7 @@ export default {
   border-width: 0 7px 14px 7px;
   margin-bottom: 10%;
 }
+
 .selector-down {
   border-width: 14px 7px 0 7px;
   top: 55%;

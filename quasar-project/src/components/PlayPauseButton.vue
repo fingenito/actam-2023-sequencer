@@ -14,8 +14,8 @@ export default {
   name: 'PlayPauseButton',
   data() {
     return {
-      playButtonBoxShadow: '0 0 10px, inset 0 0 50px rgba(0, 0, 0, 0.8)',
-      pauseButtonBoxShadow: '0 0 10px, inset 0 0 50px rgba(0, 0, 0, 0.8)',
+      playButtonBoxShadow: '3px 3px 3px rgba(0, 0, 0, 0.5), inset 0 0 50px rgba(0, 0, 0, 0.8)',
+      pauseButtonBoxShadow: '3px 3px 3px rgba(0, 0, 0, 0.5), inset 0 0 50px rgba(0, 0, 0, 0.8)',
     };
   },
   props: {
@@ -26,10 +26,10 @@ export default {
       if (newValue) {
         // Update styles when playing
         this.playButtonBoxShadow = '0 0 10px, inset 0 0 50px rgba(163, 53, 253, 0.87)';
-        this.pauseButtonBoxShadow = '0 0 10px, inset 0 0 50px rgba(0, 0, 0, 0.8)';
+        this.pauseButtonBoxShadow = '3px 3px 3px rgba(0, 0, 0, 0.5), inset 0 0 50px rgba(0, 0, 0, 0.8)';
       } else {
         // Update styles when paused
-        this.playButtonBoxShadow = '0 0 10px, inset 0 0 50px rgba(0, 0, 0, 0.8)';
+        this.playButtonBoxShadow = '3px 3px 3px rgba(0, 0, 0, 0.5), inset 0 0 50px rgba(0, 0, 0, 0.8)';
         this.pauseButtonBoxShadow = '0 0 10px, inset 0 0 50px rgba(163, 53, 253, 0.87)';
       }
     }
@@ -51,7 +51,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .playpause-container {
   position: relative;
   top: 70%;
@@ -65,6 +65,7 @@ export default {
   display: inline-block;
   width: 50%;
   height: 200%;
+
 }
 
 .button-play,
@@ -73,9 +74,10 @@ export default {
   height: 75%;
   border-radius: 50%;
   cursor: pointer;
-  box-shadow: 0 0 10px, inset 0 0 50px rgba(0, 0, 0, 0.8);
   margin-right: 20px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
 }
+
 
 .button-play:active,
 .button-pause:active {
