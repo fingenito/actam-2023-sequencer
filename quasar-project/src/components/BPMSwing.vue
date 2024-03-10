@@ -38,7 +38,7 @@ export default {
 }
 .screens-container {
   position: relative;
-  top: 65%;
+  top: 15%;
   display: flex;
   flex-direction: row;
   align-items: center;

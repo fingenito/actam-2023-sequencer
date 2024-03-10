@@ -1,9 +1,11 @@
 <template>
-  <div class="screen-container  selector" ref="screenContainer">
+  <div class="screen-container selector" ref="screenContainer">
 
     <canvas class="canvas selector " ref="visualizerCanvas"></canvas>
     <div class="screen">
+<!--
       <div class="screen-frame"></div>
+-->
 
       <div class="screen-inset"></div>
     </div>
@@ -153,9 +155,10 @@ export default {
   margin: 0 0 0;
   overflow: hidden;
   position: relative;
-  width: 85%;
-  height: 85%;
+  width: 35%;
+  height: 30%;
   border-radius: 50%;
+  left: 32%;
 }
 .screen, .screen-inset, .screen-frame, canvas, img {
   position: absolute

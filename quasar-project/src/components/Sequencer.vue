@@ -4,9 +4,8 @@
 
     <div class="left">
       <div class="topleft-container">
-        <div class="visualizerContainer">
-          <Visualizer :main-volume="mainVolume" :color="color"/>
-        </div>
+        <Visualizer :main-volume="mainVolume" :color="color"/>
+
         <BPMSwing :bpm-value="bpm" :swing-value="swingValue" :main-volume="mainVolume" :color="color"/>
       </div>
 
@@ -349,7 +348,7 @@ export default defineComponent({
 
 <style>
 body {
-  background-color: #75cc7c;
+  background-color: #ffae00;
 }
 
 .page-container {
@@ -424,7 +423,6 @@ body {
   left: 5%;
   position: relative;
 }
-
 
 .Selectors {
   height: 30%;
