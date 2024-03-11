@@ -160,6 +160,9 @@ export default {
 </script>
 
 <style>
+
+@import url('https://fonts.cdnfonts.com/css/stella-nova');
+
 .my-card {
   width: 100%;
   height: 100%;
@@ -189,6 +192,8 @@ export default {
 }
 
 .title-container {
+  font-family: 'Stella Nova', sans-serif;
+  font-size: 80%;
   width: 20%;
   display: flex;
   position: relative;

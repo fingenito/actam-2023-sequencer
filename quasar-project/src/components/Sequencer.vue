@@ -347,6 +347,7 @@ export default defineComponent({
 </script>
 
 <style>
+
 body {
   background-color: #ffae00;
 }
