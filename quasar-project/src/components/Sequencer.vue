@@ -349,7 +349,7 @@ export default defineComponent({
 <style>
 
 body {
-  background-color: #ffae00;
+  background-color: #17181C;
 }
 
 .page-container {
@@ -370,7 +370,7 @@ body {
 .topleft-container {
   height: 45%;
   width: 100%;
-  border-radius: 10% 0 0 10%;
+  border-radius: 30px 30px 30px 30px;
   background-color: #000000;
   overflow: hidden;
   box-shadow: 4px 4px 4px #666;
@@ -430,12 +430,6 @@ body {
   width: 100%;
   display: flex;
   justify-content: center;
-}
-
-.visualizerContainer {
-  height: 20%;
-  width: 25%;
-  display: flex;
 }
 
 .Effects {
