@@ -12,7 +12,7 @@
 
         <q-card-section horizontal>
           <!-- Pitch knob -->
-          <q-knob
+<!--          <q-knob
             size="300%"
             show-value
             :min="0"
@@ -27,13 +27,31 @@
             @update:model-value = "updateEffect"
             @dblclick="resetKnobValue('pitchValue')"
           >
-            {{ pitchValue }}
-          </q-knob>
+          </q-knob>-->
+
+          <Knob
+            id="pitch"
+            size="300%"
+            show-value
+            :min="0"
+            :max="20"
+            :step="1"
+            font-size="30%"
+            v-model="pitchValue"
+            :thickness="0.22"
+            color="blue"
+            track-color="grey-3"
+            class="q-mr-md q-mb-md"
+            @update:model-value = "updateEffect"
+            @dblclick="resetKnobValue('pitchValue')"
+          />
+
+
 
           <q-separator vertical/>
 
           <!-- Phaser knob -->
-          <q-knob
+<!--          <q-knob
             size="300%"
             show-value
             font-size="30%"
@@ -49,7 +67,26 @@
             @dblclick="resetKnobValue('phaserValue')"
           >
             {{ phaserValue }}
-          </q-knob>
+          </q-knob>-->
+
+          <Knob
+            id="phaser"
+            size="300%"
+            show-value
+            font-size="30%"
+            :min="0"
+            :max="1"
+            :step="0.01"
+            v-model="phaserValue"
+            :thickness="0.22"
+            color="blue"
+            track-color="grey-3"
+            class="q-ml-md q-mb-md"
+            @update:model-value = "updateEffect"
+            @dblclick="resetKnobValue('phaserValue')"
+          />
+
+
         </q-card-section>
 
         <q-card-section horizontal>
@@ -59,7 +96,7 @@
 
         <q-card-section horizontal>
           <!-- Delay knob -->
-          <q-knob
+<!--          <q-knob
             size="300%"
             show-value
             font-size="30%"
@@ -75,12 +112,29 @@
             @dblclick="resetKnobValue('delayValue')"
           >
             {{ delayValue }}
-          </q-knob>
+          </q-knob>-->
+
+          <Knob
+            id="delay"
+            size="300%"
+            show-value
+            font-size="30%"
+            v-model="delayValue"
+            :thickness="0.22"
+            :min="0"
+            :max="1"
+            :step="0.01"
+            color="blue"
+            track-color="grey-3"
+            class="q-mr-md q-mb-md"
+            @update:model-value = "updateEffect"
+            @dblclick="resetKnobValue('delayValue')"
+          />
 
           <q-separator vertical/>
 
           <!-- Reverb knob -->
-          <q-knob
+<!--          <q-knob
             size="300%"
             show-value
             font-size="30%"
@@ -96,7 +150,24 @@
             @dblclick="resetKnobValue('reverbValue')"
           >
             {{ reverbValue }}
-          </q-knob>
+          </q-knob>-->
+          <Knob
+            id="Reverb"
+            size="300%"
+            show-value
+            font-size="30%"
+            v-model="reverbValue"
+            :thickness="0.22"
+            :min="0"
+            :max="1"
+            :step="0.01"
+            color="blue"
+            track-color="grey-3"
+            class="q-ml-md q-mb-md"
+            @update:model-value = "updateEffect"
+            @dblclick="resetKnobValue('reverbValue')"
+          />
+
         </q-card-section>
       </div>
     </q-card-section>
@@ -106,12 +177,15 @@
 <script>
 import SimpleButton from "components/SimpleButton.vue";
 import {ref, watch} from "vue";
+
+
 import * as Tone from "tone";
 import Sequencer from "components/Sequencer";
+import Knob from "components/Knob.vue";
 
 export default {
   name: 'KnobSection',
-  components: {SimpleButton},
+  components: {Knob, SimpleButton},
   props:{
     row: Number,
     sectionLabel: String, // instrument which section is linked to
@@ -152,6 +226,7 @@ export default {
     },
     updateEffect (){
       this.update(this.row,this.pitchValue,this.phaserValue,this.reverbValue,this.delayValue)
+
     }
   }
 }

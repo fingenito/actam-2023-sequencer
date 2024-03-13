@@ -34,7 +34,7 @@ export default defineComponent({
     },
     value:{
       type: Number,
-      default: 50,
+      default: 0,
     },
     step:{
       type: Number,
@@ -60,13 +60,13 @@ export default defineComponent({
 <template>
   <div class="knobContainer">
     <!--    <input type="range" min="1" max="100" value="50" class="slider" id="myRange">-->
-    <q-knob :color="color" size="xxl" class="knob" :min="min" :max="innerMax * 1.33" :inner-max="innerMax" :step="step" :thickness="thickness" show-value :angle="225" v-model="value" @update:model-value="updateValue" >
+    <q-knob :color="color" size="xxl" class="knob" :min="min" :max="max" :inner-max="innerMax" :step="step" :thickness="thickness" show-value v-model="value" @update:model-value="updateValue" >
       <template v-slot:default>
         <!--        <div class="knob">-->
         <!--          <div class="knob__indicator" >-->
         <div class="q-pa-md">
           <q-icon size="lg" :style="{ transform: `rotate(${rotation}deg)` }">
-            <img src="~assets/images/knob_vector_1.svg"  alt="" style="width: 100px; height: 100px; transform: rotate(-133deg);"/>
+            <img src="~assets/images/knob_vector_1.svg"  alt="" style="width: 100px; height: 100px;"/>
 
           </q-icon>
         </div>
@@ -88,6 +88,9 @@ export default defineComponent({
   pointer-events: none;
 }
 
+.knobContainer {
+  margin-bottom: 4%;
+}
 
 
 
