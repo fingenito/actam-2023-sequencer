@@ -25,12 +25,12 @@ export default {
     isPlaying(newValue) {
       if (newValue) {
         // Update styles when playing
-        this.playButtonBoxShadow = '0 0 10px, inset 0 0 50px rgba(163, 53, 253, 0.87)';
-        this.pauseButtonBoxShadow = '3px 3px 3px rgba(0, 0, 0, 0.5), inset 0 0 50px rgba(0, 0, 0, 0.8)';
+        this.playButtonBoxShadow = '0 0 15px #ff0000, inset 0 0 50px black';
+        this.pauseButtonBoxShadow = '3px 3px 3px rgba(0, 0, 0, 0.5), inset 0 0 50px black';
       } else {
         // Update styles when paused
-        this.playButtonBoxShadow = '3px 3px 3px rgba(0, 0, 0, 0.5), inset 0 0 50px rgba(0, 0, 0, 0.8)';
-        this.pauseButtonBoxShadow = '0 0 10px, inset 0 0 50px rgba(163, 53, 253, 0.87)';
+        this.playButtonBoxShadow = '3px 3px 3px rgba(0, 0, 0, 0.5), inset 0 0 50px black';
+        this.pauseButtonBoxShadow = '0 0 15px #ff0000, inset 0 0 50px black';
       }
     }
   },
@@ -66,6 +66,7 @@ export default {
   width: 50%;
   height: 200%;
 
+
 }
 
 .button-play,
@@ -76,11 +77,12 @@ export default {
   cursor: pointer;
   margin-right: 20px;
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+  color: antiquewhite;
 }
 
 
 .button-play:active,
 .button-pause:active {
-  box-shadow: 0 0 10px, inset 0 0 50px rgba(163, 53, 253, 0.87);
+  box-shadow: 0 0 10px, inset 0 0 50px #d21f1b;
 }
 </style>

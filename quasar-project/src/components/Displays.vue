@@ -16,16 +16,14 @@ export default {
 </script>
 
 <style scoped>
-@font-face {
-  font-family: 'DS-Digital';
-  src: url('assets/fonts/ds_digital/DS-DIGI.TTF') format('truetype')
-}
+@import url('https://fonts.cdnfonts.com/css/stella-nova');
+
 .display-container {
   border-radius: 8px;
   overflow: hidden;
   width: 100%;
   height: 110%;
-  background: linear-gradient(to bottom right, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0.55) 100%), rgb(246, 246, 246);
+  background: linear-gradient(to bottom right, rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0.65) 100%), rgb(236, 233, 233);
   box-shadow: 4px 4px 4px #666;
 }
 
@@ -34,12 +32,14 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'DS-Digital', sans-serif;
-  font-size: 100%;
+  font-family: 'Stella Nova', sans-serif;
+  font-size: 85%;
+  font-weight: 400;
   position: relative;
 }
 
 .display-content label{
+
   color: #dcdcdc;
 
 }

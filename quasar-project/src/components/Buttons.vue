@@ -39,8 +39,8 @@ export default {
 
 .drum_pad {
   position: relative;
-  width: 75%;
-  height: 90%;
+  width: 85%;
+  height: 100%;
   bottom: 15%;
   display: flex;
   justify-content: center;

@@ -445,7 +445,7 @@ body {
   height: 100%;
   width: 100%;
   margin-top: 2%;
-  margin-bottom: 3%;
+  margin-bottom: 2%;
 }
 
 </style>
