@@ -21,12 +21,12 @@
         <div class="Controls">
             <!-- BPM slider -->
           <div class="control-container">
-            <q-slider class="BPMSlider" vertical v-model="bpm" :min="30" :max="240" :reverse="true"/>
+            <q-slider class="BPMSlider" vertical v-model="bpm" :min="30" :max="240" :reverse="true" color="black"/>
           </div>
 
             <!-- Swing slider -->
           <div class="control-container">
-            <q-slider class="SwingSlider" vertical v-model="swingValue" :min="0" :max="1" :step="0.05" :reverse="true"/>
+            <q-slider class="SwingSlider" vertical v-model="swingValue" :min="0" :max="1" :step="0.05" :reverse="true" color="black"/>
           </div>
 
           <!-- Play/pause buttons -->
