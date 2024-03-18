@@ -1,6 +1,5 @@
 <template>
   <div class="knobContainer">
-    <!--    <input type="range" min="1" max="100" value="50" class="slider" id="myRange">-->
     <q-knob
       :color="color"
       size="xxl"
@@ -14,26 +13,16 @@
       v-model="value"
       @update:model-value="updateValue"
     >
-
     <template v-slot:default>
-      <!--        <div class="knob">-->
-      <!--          <div class="knob__indicator" >-->
       <div class="q-pa-md">
         <q-icon size="lg" :style="{ transform: `rotate(${rotation}deg)` }">
           <img src="~assets/images/knob_vector_1.svg"  alt="" style="width: 100px; height: 100px;"/>
         </q-icon>
       </div>
 
-        <!--          </div>-->
-        <!--        </div>-->
-
-
-        <!--          <div class="knob__value">{{ value }}</div>-->
       </template>
     </q-knob>
   </div>
-  <!--  <p>Value: {{value}}</p>-->
-
 </template>
 
 <script>
@@ -106,4 +95,5 @@ export default defineComponent({
 .knobContainer {
   margin-bottom: 4%;
 }
+
 </style>

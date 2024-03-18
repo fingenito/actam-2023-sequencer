@@ -3,6 +3,12 @@
     <div class="title-container">
       <label>{{ sectionLabel }}</label>
     </div>
+
+    <div>
+      <SimpleButton @click="resetAll"
+      />
+    </div>
+
     <q-card-section class="knob-container">
       <div>
         <q-card-section horizontal>
@@ -268,33 +274,6 @@ export default {
     }
   },
   methods : {
-    // resetKnobValue(resetValue){
-    //   console.log("Reset");
-    //   this[resetValue] = 0;
-    //   this.updateEffect();
-    //   console.log("Updated")
-    // },
-    // resetKnobValue(resetValue){
-    //   switch (resetValue) {
-    //     case 'pitchValue':
-    //       this.pitchValue.value = 0;
-    //       break;
-    //     case 'phaserValue':
-    //       this.phaserValue.value = 0;
-    //       break;
-    //     case 'delayValue':
-    //       this.delayValue.value = 0;
-    //       break;
-    //     case 'reverbValue':
-    //       this.reverbValue.value = 0;
-    //       break;
-    //   }
-    //   this.update(this.row, this.pitchValue, this.phaserValue, this.reverbValue, this.delayValue);
-    // },
-    updateEffect (){
-      // Uses updateEffects function from the Sequencer component
-      this.update(this.row, this.pitchValue, this.phaserValue, this.reverbValue, this.delayValue)
-    },
     updateValue(newValue, effectName){
       switch (effectName) {
         case 'pitch':
@@ -310,6 +289,13 @@ export default {
           this.reverbValue = newValue;
           break;
       }
+      this.update(this.row, this.pitchValue, this.phaserValue, this.reverbValue, this.delayValue);
+    },
+    resetAll(){
+      this.pitchValue = 0;
+      this.phaserValue = 0;
+      this.delayValue = 0;
+      this.reverbValue = 0;
       this.update(this.row, this.pitchValue, this.phaserValue, this.reverbValue, this.delayValue);
     }
   }
