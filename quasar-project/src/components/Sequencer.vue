@@ -172,11 +172,13 @@ import SubdivisionSelection from "components/SubdivisionSelection.vue";
 import Knob from "components/Knob.vue";
 import KnobSection from "components/KnobsFX.vue";
 import Visualizer from "components/Visualizer.vue";
+import TestSlider from "components/CoolSlider.vue";
 
 export default defineComponent({
   name : 'SequencerComp',
 
   components: {
+    TestSlider,
     Visualizer,
     Displays,
     Subdivision,
@@ -208,9 +210,7 @@ export default defineComponent({
     const selectedNoteLength = ref(subdivisions[0]);
     const selectedKit = ref(kits[0]);
     const [pitchShifts, delays, reverbs, phasers, gains] = Sequencer.configFX(instruments.length);
-    // const myPlayers = new Tone.Players()
 
-    // Sequencer.configPlayers(myPlayers, instruments, null, kits[0], pitchShifts, delays, reverbs, phasers, gains, mainVolume, 1);
 
     // Creates set of players containing sounds for each kit
     kits.forEach((kit) =>{
@@ -232,7 +232,6 @@ export default defineComponent({
         const active = toRaw(row).buttons[beat.value].isActive
         if(active){
           instrument.start(time);
-          console.log("Played row", row);
         }
       })
     },selectedNoteLength.value+'n');
@@ -332,6 +331,11 @@ export default defineComponent({
       this.delays[index].wet.value = delayValue;
       this.phasers[index].wet.value = phaserValue;
       this.reverbs[index].wet.value = reverbValue;
+      console.log("Changed row", index);
+      console.log("Changed pitch to", pitchValue);
+      console.log("Changed delay to", delayValue);
+      console.log("Changed phaser to", phaserValue);
+      console.log("Changed reverb to", reverbValue);
     },
     turnOn(row){
       console.log("Turn on row", row)
@@ -447,5 +451,6 @@ body {
   margin-top: 2%;
   margin-bottom: 2%;
 }
+
 
 </style>

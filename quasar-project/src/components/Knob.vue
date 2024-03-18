@@ -1,3 +1,41 @@
+<template>
+  <div class="knobContainer">
+    <!--    <input type="range" min="1" max="100" value="50" class="slider" id="myRange">-->
+    <q-knob
+      :color="color"
+      size="xxl"
+      class="knob"
+      :min="min"
+      :max="max"
+      :inner-max="innerMax"
+      :step="step"
+      :thickness="thickness"
+      show-value
+      v-model="value"
+      @update:model-value="updateValue"
+    >
+
+    <template v-slot:default>
+      <!--        <div class="knob">-->
+      <!--          <div class="knob__indicator" >-->
+      <div class="q-pa-md">
+        <q-icon size="lg" :style="{ transform: `rotate(${rotation}deg)` }">
+          <img src="~assets/images/knob_vector_1.svg"  alt="" style="width: 100px; height: 100px;"/>
+        </q-icon>
+      </div>
+
+        <!--          </div>-->
+        <!--        </div>-->
+
+
+        <!--          <div class="knob__value">{{ value }}</div>-->
+      </template>
+    </q-knob>
+  </div>
+  <!--  <p>Value: {{value}}</p>-->
+
+</template>
+
 <script>
 import {ref, defineComponent, computed} from "vue";
 
@@ -12,76 +50,53 @@ export default defineComponent({
       type: String,
       default: "xl",
     },
-    color :{
+    color: {
       type: String,
       default: "accent",
     },
-    min :{
+    min: {
       type: Number,
       default: 0,
     },
-    max :{
+    max: {
       type: Number,
       default: 100,
     },
-    innerMax:{
+    innerMax: {
       type: Number,
       default: 100,
     },
-    thickness:{
+    thickness: {
       type: Number,
       default: 0.2,
     },
-    value:{
+    position: {
       type: Number,
       default: 0,
     },
-    step:{
+    step: {
       type: Number,
       default: 1,
     }
   },
-  setup(props, {emit}){
-    const value = ref(props.value);
-    const rotation = computed(() => value.value * 360/props.max); // Assuming the knob's value is between 0 and 100, this will give a rotation angle between 0 and 360 degrees
-
-    const updateValue = (newValue) => {
-      console.log("value", value.value)
-      console.log("newValue", newValue)
-      console.log("props.id", props.id)
-      emit('updateValue', { id: props.id, value: newValue });
+  methods: {
+    updateValue(newValue){
+      console.log("New value", newValue);
+      this.value = newValue; // Update the value
+      this.$emit('updateValue', newValue, this.id);
     }
-    return {value, updateValue,rotation}
+  },
+  setup(props) {
+    const value = ref(0);
+    const rotation = computed(() => (props.position * 360) / props.max);
+
+    return {
+      value,
+      rotation
+    }
   }
 })
-
 </script>
-
-<template>
-  <div class="knobContainer">
-    <!--    <input type="range" min="1" max="100" value="50" class="slider" id="myRange">-->
-    <q-knob :color="color" size="xxl" class="knob" :min="min" :max="max" :inner-max="innerMax" :step="step" :thickness="thickness" show-value v-model="value" @update:model-value="updateValue" >
-      <template v-slot:default>
-        <!--        <div class="knob">-->
-        <!--          <div class="knob__indicator" >-->
-        <div class="q-pa-md">
-          <q-icon size="lg" :style="{ transform: `rotate(${rotation}deg)` }">
-            <img src="~assets/images/knob_vector_1.svg"  alt="" style="width: 100px; height: 100px;"/>
-
-          </q-icon>
-        </div>
-
-        <!--          </div>-->
-        <!--        </div>-->
-
-
-        <!--          <div class="knob__value">{{ value }}</div>-->
-      </template>
-    </q-knob>
-  </div>
-  <!--  <p>Value: {{value}}</p>-->
-
-</template>
 
 <style>
 .q-icon img {
@@ -91,7 +106,4 @@ export default defineComponent({
 .knobContainer {
   margin-bottom: 4%;
 }
-
-
-
 </style>

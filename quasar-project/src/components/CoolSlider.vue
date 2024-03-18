@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  name: 'CoolSlider',
+  name: 'TestSlider',
   props: {
     minValue: {
       type: Number,

@@ -29,23 +29,38 @@
           >
           </q-knob>-->
 
+<!--          <Knob-->
+<!--            id="pitch"-->
+<!--            size="300%"-->
+<!--            show-value-->
+<!--            :min="0"-->
+<!--            :max="20"-->
+<!--            :step="1"-->
+<!--            font-size="30%"-->
+<!--            v-model="pitchValue"-->
+<!--            :thickness="0.22"-->
+<!--            color="transparent"-->
+<!--            track-color="grey-3"-->
+<!--            class="q-mr-md q-mb-md"-->
+<!--            @update:model-value = "updateEffect"-->
+<!--            @dblclick="resetKnobValue('pitchValue')"-->
+<!--          />-->
           <Knob
             id="pitch"
             size="300%"
             show-value
-            :min="0"
-            :max="20"
-            :step="1"
             font-size="30%"
-            v-model="pitchValue"
+            :position="pitchValue"
             :thickness="0.22"
-            color="blue"
+            :min="0"
+            :max="10"
+            :step="1"
+            color="transparent"
             track-color="grey-3"
-            class="q-mr-md q-mb-md"
-            @update:model-value = "updateEffect"
-            @dblclick="resetKnobValue('pitchValue')"
+            class="q-ml-md q-mb-md"
+            @updateValue="updateValue"
+            @dblclick="updateValue(0,'pitch')"
           />
-
 
 
           <q-separator vertical/>
@@ -69,21 +84,37 @@
             {{ phaserValue }}
           </q-knob>-->
 
+<!--          <Knob-->
+<!--            id="phaser"-->
+<!--            size="300%"-->
+<!--            show-value-->
+<!--            font-size="30%"-->
+<!--            :min="0"-->
+<!--            :max="1"-->
+<!--            :step="0.01"-->
+<!--            v-model="phaserValue"-->
+<!--            :thickness="0.22"-->
+<!--            color="transparent"-->
+<!--            track-color="grey-3"-->
+<!--            class="q-ml-md q-mb-md"-->
+<!--            @update:model-value = "updateEffect"-->
+<!--            @dblclick="resetKnobValue('phaserValue')"-->
+<!--          />-->
           <Knob
             id="phaser"
             size="300%"
             show-value
             font-size="30%"
+            :position="phaserValue"
+            :thickness="0.22"
             :min="0"
             :max="1"
             :step="0.01"
-            v-model="phaserValue"
-            :thickness="0.22"
-            color="blue"
+            color="transparent"
             track-color="grey-3"
             class="q-ml-md q-mb-md"
-            @update:model-value = "updateEffect"
-            @dblclick="resetKnobValue('phaserValue')"
+            @updateValue="updateValue"
+            @dblclick="updateValue(0,'phaser')"
           />
 
 
@@ -119,16 +150,16 @@
             size="300%"
             show-value
             font-size="30%"
-            v-model="delayValue"
+            :position="delayValue"
             :thickness="0.22"
             :min="0"
             :max="1"
             :step="0.01"
-            color="blue"
+            color="transparent"
             track-color="grey-3"
-            class="q-mr-md q-mb-md"
-            @update:model-value = "updateEffect"
-            @dblclick="resetKnobValue('delayValue')"
+            class="q-ml-md q-mb-md"
+            @updateValue="updateValue"
+            @dblclick="updateValue(0,'delay')"
           />
 
           <q-separator vertical/>
@@ -152,20 +183,20 @@
             {{ reverbValue }}
           </q-knob>-->
           <Knob
-            id="Reverb"
+            id="reverb"
             size="300%"
             show-value
             font-size="30%"
-            v-model="reverbValue"
+            :position="reverbValue"
             :thickness="0.22"
             :min="0"
             :max="1"
             :step="0.01"
-            color="blue"
+            color="transparent"
             track-color="grey-3"
             class="q-ml-md q-mb-md"
-            @update:model-value = "updateEffect"
-            @dblclick="resetKnobValue('reverbValue')"
+            @updateValue="updateValue"
+            @dblclick="updateValue(0,'reverb')"
           />
 
         </q-card-section>
@@ -176,7 +207,7 @@
 
 <script>
 import SimpleButton from "components/SimpleButton.vue";
-import {ref, watch} from "vue";
+import {ref} from "vue";
 
 
 import * as Tone from "tone";
@@ -212,7 +243,24 @@ export default {
     const delayValue = ref(0);
     const reverbValue = ref(0);
 
-    return{
+    // const resetKnobValue = (resetValue) => {
+    //   switch (resetValue) {
+    //     case 'pitchValue':
+    //       pitchValue.value = 0;
+    //       break;
+    //     case 'phaserValue':
+    //       phaserValue.value = 0;
+    //       break;
+    //     case 'delayValue':
+    //       delayValue.value = 0;
+    //       break;
+    //     case 'reverbValue':
+    //       reverbValue.value = 0;
+    //       break;
+    //   }
+    // };
+
+    return {
       pitchValue,
       phaserValue,
       delayValue,
@@ -220,13 +268,49 @@ export default {
     }
   },
   methods : {
-    resetKnobValue(resetValue){
-      this[resetValue] = 0;
-      this.updateEffect();
-    },
+    // resetKnobValue(resetValue){
+    //   console.log("Reset");
+    //   this[resetValue] = 0;
+    //   this.updateEffect();
+    //   console.log("Updated")
+    // },
+    // resetKnobValue(resetValue){
+    //   switch (resetValue) {
+    //     case 'pitchValue':
+    //       this.pitchValue.value = 0;
+    //       break;
+    //     case 'phaserValue':
+    //       this.phaserValue.value = 0;
+    //       break;
+    //     case 'delayValue':
+    //       this.delayValue.value = 0;
+    //       break;
+    //     case 'reverbValue':
+    //       this.reverbValue.value = 0;
+    //       break;
+    //   }
+    //   this.update(this.row, this.pitchValue, this.phaserValue, this.reverbValue, this.delayValue);
+    // },
     updateEffect (){
-      this.update(this.row,this.pitchValue,this.phaserValue,this.reverbValue,this.delayValue)
-
+      // Uses updateEffects function from the Sequencer component
+      this.update(this.row, this.pitchValue, this.phaserValue, this.reverbValue, this.delayValue)
+    },
+    updateValue(newValue, effectName){
+      switch (effectName) {
+        case 'pitch':
+          this.pitchValue = newValue;
+          break;
+        case 'phaser':
+          this.phaserValue = newValue;
+          break;
+        case 'delay':
+          this.delayValue = newValue;
+          break;
+        case 'reverb':
+          this.reverbValue = newValue;
+          break;
+      }
+      this.update(this.row, this.pitchValue, this.phaserValue, this.reverbValue, this.delayValue);
     }
   }
 }

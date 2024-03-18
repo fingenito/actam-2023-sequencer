@@ -46,7 +46,7 @@ export default {
   background-image: linear-gradient(145deg, #171717, #6d6b6e);
   box-shadow: inset 1px 1px 0 #7d7c7e, inset -1px -1px 0 #1c1c1c;
   cursor: pointer;
-  transition: box-shadow 0.3s ease; /* Aggiunto il trasferimento per un effetto più fluido */
+  transition: box-shadow 0.3s ease;
 }
 
 .simple-button:active {
@@ -62,6 +62,7 @@ export default {
   height: 40%;
   border-radius: 50%;
   background-color: darkred;
+
 }
 
 .simple-led-on {
