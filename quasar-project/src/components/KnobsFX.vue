@@ -5,7 +5,7 @@
     </div>
 
     <div>
-      <SimpleButton @click="resetAll"
+      <ResetEffectButton @click="resetAll"
       />
     </div>
 
@@ -17,40 +17,8 @@
         </q-card-section>
 
         <q-card-section horizontal>
-          <!-- Pitch knob -->
-<!--          <q-knob
-            size="300%"
-            show-value
-            :min="0"
-            :max="20"
-            :step="1"
-            font-size="30%"
-            v-model="pitchValue"
-            :thickness="0.22"
-            color="blue"
-            track-color="grey-3"
-            class="q-mr-md q-mb-md"
-            @update:model-value = "updateEffect"
-            @dblclick="resetKnobValue('pitchValue')"
-          >
-          </q-knob>-->
 
-<!--          <Knob-->
-<!--            id="pitch"-->
-<!--            size="300%"-->
-<!--            show-value-->
-<!--            :min="0"-->
-<!--            :max="20"-->
-<!--            :step="1"-->
-<!--            font-size="30%"-->
-<!--            v-model="pitchValue"-->
-<!--            :thickness="0.22"-->
-<!--            color="transparent"-->
-<!--            track-color="grey-3"-->
-<!--            class="q-mr-md q-mb-md"-->
-<!--            @update:model-value = "updateEffect"-->
-<!--            @dblclick="resetKnobValue('pitchValue')"-->
-<!--          />-->
+          <!-- Pitch knob -->
           <Knob
             id="pitch"
             size="300%"
@@ -63,7 +31,7 @@
             :step="1"
             color="transparent"
             track-color="grey-3"
-            class="q-ml-md q-mb-md"
+            class="knob-pitch"
             @updateValue="updateValue"
             @dblclick="updateValue(0,'pitch')"
           />
@@ -72,55 +40,21 @@
           <q-separator vertical/>
 
           <!-- Phaser knob -->
-<!--          <q-knob
-            size="300%"
-            show-value
-            font-size="30%"
-            :min="0"
-            :max="1"
-            :step="0.01"
-            v-model="phaserValue"
-            :thickness="0.22"
-            color="blue"
-            track-color="grey-3"
-            class="q-ml-md q-mb-md"
-            @update:model-value = "updateEffect"
-            @dblclick="resetKnobValue('phaserValue')"
-          >
-            {{ phaserValue }}
-          </q-knob>-->
-
-<!--          <Knob-->
-<!--            id="phaser"-->
-<!--            size="300%"-->
-<!--            show-value-->
-<!--            font-size="30%"-->
-<!--            :min="0"-->
-<!--            :max="1"-->
-<!--            :step="0.01"-->
-<!--            v-model="phaserValue"-->
-<!--            :thickness="0.22"-->
-<!--            color="transparent"-->
-<!--            track-color="grey-3"-->
-<!--            class="q-ml-md q-mb-md"-->
-<!--            @update:model-value = "updateEffect"-->
-<!--            @dblclick="resetKnobValue('phaserValue')"-->
-<!--          />-->
           <Knob
-            id="phaser"
-            size="300%"
-            show-value
-            font-size="30%"
-            :position="phaserValue"
-            :thickness="0.22"
-            :min="0"
-            :max="1"
-            :step="0.01"
-            color="transparent"
-            track-color="grey-3"
-            class="q-ml-md q-mb-md"
-            @updateValue="updateValue"
-            @dblclick="updateValue(0,'phaser')"
+              id="phaser"
+              size="300%"
+              show-value
+              font-size="30%"
+              :position="phaserValue"
+              :thickness="0.22"
+              :min="0"
+              :max="1"
+              :step="0.01"
+              color="transparent"
+              track-color="grey-3"
+              class="knob-phaser"
+              @updateValue="updateValue"
+              @dblclick="updateValue(0,'phaser')"
           />
 
 
@@ -132,25 +66,8 @@
         </q-card-section>
 
         <q-card-section horizontal>
-          <!-- Delay knob -->
-<!--          <q-knob
-            size="300%"
-            show-value
-            font-size="30%"
-            v-model="delayValue"
-            :thickness="0.22"
-            :min="0"
-            :max="1"
-            :step="0.01"
-            color="blue"
-            track-color="grey-3"
-            class="q-mr-md q-mb-md"
-            @update:model-value = "updateEffect"
-            @dblclick="resetKnobValue('delayValue')"
-          >
-            {{ delayValue }}
-          </q-knob>-->
 
+          <!-- Delay knob -->
           <Knob
             id="delay"
             size="300%"
@@ -163,7 +80,7 @@
             :step="0.01"
             color="transparent"
             track-color="grey-3"
-            class="q-ml-md q-mb-md"
+            class="knob-delay"
             @updateValue="updateValue"
             @dblclick="updateValue(0,'delay')"
           />
@@ -171,23 +88,6 @@
           <q-separator vertical/>
 
           <!-- Reverb knob -->
-<!--          <q-knob
-            size="300%"
-            show-value
-            font-size="30%"
-            v-model="reverbValue"
-            :thickness="0.22"
-            :min="0"
-            :max="1"
-            :step="0.01"
-            color="blue"
-            track-color="grey-3"
-            class="q-ml-md q-mb-md"
-            @update:model-value = "updateEffect"
-            @dblclick="resetKnobValue('reverbValue')"
-          >
-            {{ reverbValue }}
-          </q-knob>-->
           <Knob
             id="reverb"
             size="300%"
@@ -200,7 +100,7 @@
             :step="0.01"
             color="transparent"
             track-color="grey-3"
-            class="q-ml-md q-mb-md"
+            class="knob-reverb"
             @updateValue="updateValue"
             @dblclick="updateValue(0,'reverb')"
           />
@@ -212,17 +112,15 @@
 </template>
 
 <script>
-import SimpleButton from "components/SimpleButton.vue";
+import ResetEffectButton from "components/ResetEffectButton.vue";
 import {ref} from "vue";
-
-
+import Knob from "components/Knob.vue";
 import * as Tone from "tone";
 import Sequencer from "components/Sequencer";
-import Knob from "components/Knob.vue";
 
 export default {
   name: 'KnobSection',
-  components: {Knob, SimpleButton},
+  components: {ResetEffectButton, Knob},
   props:{
     row: Number,
     sectionLabel: String, // instrument which section is linked to
@@ -317,15 +215,14 @@ export default {
 
 .knob-container {
   position: relative;
-  display: flex;
   height: 100%;
-  width: 80%;
+  width: 100%;
 }
 
 .labels-left {
   font-size: 50%;
   color: black;
-  margin-left: 9%;
+  margin-left: 11%;
   font-weight: bold;
 }
 
@@ -348,5 +245,11 @@ export default {
   justify-content: center;
 }
 
+.knob-phaser, .knob-reverb {
+  margin-left: 10%;
+}
 
+.knob-pitch, .knob-delay {
+  margin-right: 10%;
+}
 </style>

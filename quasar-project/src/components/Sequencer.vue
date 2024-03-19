@@ -5,7 +5,7 @@
     <div class="left">
       <div class="topleft-container">
         <Visualizer :main-volume="mainVolume" :color="color"/>
-
+        <div class="line-horiz"></div>
         <BPMSwing :bpm-value="bpm" :swing-value="swingValue" :main-volume="mainVolume" :color="color"/>
       </div>
 
@@ -22,11 +22,13 @@
             <!-- BPM slider -->
           <div class="control-container">
             <q-slider class="BPMSlider" vertical v-model="bpm" :min="30" :max="240" :reverse="true" color="black"/>
+            <div class="label">BPM</div>
           </div>
 
             <!-- Swing slider -->
           <div class="control-container">
             <q-slider class="SwingSlider" vertical v-model="swingValue" :min="0" :max="1" :step="0.05" :reverse="true" color="black"/>
+            <div class="label">SWING</div>
           </div>
 
           <!-- Play/pause buttons -->
@@ -57,8 +59,8 @@
                 <simple-button :row-index="rowIndex" class="q-ma-sm" @turnOn="turnOn" @turnOff="turnOff"/>
               </div>
             </div>
-
           </div>
+        <p class="line"/>
       </div>
       <div class="bottomright-container">
         <!-- Effects section -->
@@ -352,6 +354,8 @@ export default defineComponent({
 
 <style>
 
+@import url('https://fonts.cdnfonts.com/css/stella-nova');
+
 body {
   background-color: #17181C;
 }
@@ -360,7 +364,7 @@ body {
   width: 98%;
   background: #fdeedf;
   border-radius: 50px;
-  padding: 2%; /* Regola la dimensione del margine sfumato interno */
+  padding: 2%;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.8), inset 0 0 50px rgba(80, 80, 80, 50);
   height: 92vh;
 }
@@ -378,7 +382,7 @@ body {
   background-color: #000000;
   overflow: hidden;
   box-shadow: 4px 4px 4px #666;
-
+  background-image: linear-gradient(to top left, rgba(255, 255, 255, 0.2), rgb(5, 5, 5));
 }
 
 .bottomleft-container {
@@ -423,7 +427,7 @@ body {
 }
 
 .BPMSlider, .SwingSlider {
-  height: 90%;
+  height: 85%;
   top: 5%;
   left: 5%;
   position: relative;
@@ -452,5 +456,35 @@ body {
   margin-bottom: 2%;
 }
 
+.line {
+  position: relative;
+  display: flex;
+  width: 80%;
+  height: 2px;
+  background: radial-gradient(circle at center left, rgba(200, 200, 200, 0.56), rgba(100, 100, 100, 0.55), rgba(200, 200, 200, 0.53));
+  margin-top: 3%;
+  left: 10%;
+  border-radius: 1px;
+}
 
+.label {
+  font-family: 'Stella Nova', sans-serif;
+  position: relative;
+  font-size: 0.7em;
+  font-weight: bold;
+  color: #000000;
+  left: 3%;
+  top: 8%;
+}
+
+.line-horiz {
+  position: relative;
+  display: flex;
+  width: 70%;
+  height: 1px;
+  margin-top: 3%;
+  left: 15%;
+  background: radial-gradient(circle at center left, rgba(255, 255, 255, 0.8), rgba(197, 196, 196, 0.72), rgba(255, 255, 255, 0.8));
+  border-radius: 1px;
+}
 </style>
