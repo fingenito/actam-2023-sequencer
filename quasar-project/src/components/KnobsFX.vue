@@ -5,8 +5,10 @@
     </div>
 
     <div>
-      <ResetEffectButton @click="resetAll"
-      />
+<!--      <ResetEffectButton @click="resetAll"/>-->
+<!--      <simple-button @click="resetAll"/>-->
+      <button class="simple-button" @click="resetAll"/>
+      <div class="rst">RST</div>
     </div>
 
     <q-card-section class="knob-container">
@@ -112,15 +114,15 @@
 </template>
 
 <script>
-import ResetEffectButton from "components/ResetEffectButton.vue";
 import {ref} from "vue";
 import Knob from "components/Knob.vue";
 import * as Tone from "tone";
 import Sequencer from "components/Sequencer";
+import SimpleButton from "components/SimpleButton.vue";
 
 export default {
   name: 'KnobSection',
-  components: {ResetEffectButton, Knob},
+  components: {SimpleButton, Knob},
   props:{
     row: Number,
     sectionLabel: String, // instrument which section is linked to
@@ -251,5 +253,30 @@ export default {
 
 .knob-pitch, .knob-delay {
   margin-right: 10%;
+}
+
+.simple-button {
+  position: relative;
+  height: 15%;
+  border-radius: 8px;
+  border: 2px solid #090909;
+  background-image: linear-gradient(145deg, #171717, #6d6b6e);
+  box-shadow: inset 1px 1px 0 #7d7c7e, inset -1px -1px 0 #1c1c1c;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
+  top: 77%;
+}
+
+.simple-button:active {
+  box-shadow: inset 3px 3px 5px #7d7c7e, inset -3px -3px 5px #1c1c1c;
+}
+
+.rst {
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6em;
+  font-weight: bold;
+  top: 75%;
 }
 </style>
