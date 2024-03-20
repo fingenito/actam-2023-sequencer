@@ -204,7 +204,9 @@ export default defineComponent({
     let color = 'red';
 
 
-    const kits = ['808', 'hiphop', '8bit'];
+    // const kits = ['808', 'hiphop', '8bit'];
+    const kits = ['bob', 'hophip', 'byte', 't3kno', 'akustik'];
+
     // const instruments = ['kick','hihat','snare', 'openhat', 'perc'];
     const instruments = ['kick','hihat','snare', 'openhat'];
     const subdivisions = ['4', '8', '16'];
