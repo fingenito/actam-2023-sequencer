@@ -16,7 +16,6 @@
 <script>
 import { onMounted, onUnmounted, ref } from "vue";
 import * as Tone from "tone";
-import Sequencer from "components/Sequencer.vue";
 import {getCssVar} from "quasar";
 
 export default {
@@ -180,17 +179,17 @@ export default {
 .screen-inset {
   box-shadow: 0 -0.1em 0.1em 0.6em rgba(35, 34, 34, 0.42) inset;
 }
-.screen-frame {
-  border-top: 2em solid #7b807d;
-  border-right: 2em solid #9da28f;
-  border-bottom: 2em solid #b0b5a0;
-  border-left: 2em solid #8c917e;
-  border-radius: 3em;
-  box-shadow: 0 0.1em 0.2em 0.2em #0007 inset;
-  top: 50%;
-  left: 50%;
-  width: calc(110%);
-  height: calc(130%);
-  transform: translate(-50%,-50%);
-}
+//.screen-frame {
+//  border-top: 2em solid #7b807d;
+//  border-right: 2em solid #9da28f;
+//  border-bottom: 2em solid #b0b5a0;
+//  border-left: 2em solid #8c917e;
+//  border-radius: 3em;
+//  box-shadow: 0 0.1em 0.2em 0.2em #0007 inset;
+//  top: 50%;
+//  left: 50%;
+//  width: calc(110%);
+//  height: calc(130%);
+//  transform: translate(-50%,-50%);
+//}
 </style>

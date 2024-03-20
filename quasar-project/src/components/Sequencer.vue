@@ -382,7 +382,12 @@ body {
   background-color: #000000;
   overflow: hidden;
   box-shadow: 4px 4px 4px #666;
-  background-image: linear-gradient(to top left, rgba(255, 255, 255, 0.2), rgb(5, 5, 5));
+  //background-image: linear-gradient(to top left, rgba(255, 255, 255, 0.2), rgb(5, 5, 5));
+  background-image:
+    radial-gradient(50% 5% at 50% 1%, rgba(255, 255, 255, 0.29) 0.5%,#fff0),
+    radial-gradient(110% 65% at 60% 150%, rgba(255, 255, 255, 0.85) 1%,#fff0),
+    radial-gradient(100% 100% at 50% 50%,#0000 25%,#000 50%),
+    radial-gradient(100% 100% at 50% 50%,#0000 20%,#000 80%);
 }
 
 .bottomleft-container {
