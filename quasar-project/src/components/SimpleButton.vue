@@ -47,6 +47,7 @@ export default {
   box-shadow: inset 1px 1px 0 #7d7c7e, inset -1px -1px 0 #1c1c1c;
   cursor: pointer;
   transition: box-shadow 0.3s ease;
+  top: 10%;
 }
 
 .simple-button:active {
