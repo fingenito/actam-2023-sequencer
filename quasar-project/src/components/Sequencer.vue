@@ -174,7 +174,7 @@ import SubdivisionSelection from "components/SubdivisionSelection.vue";
 import Knob from "components/Knob.vue";
 import KnobSection from "components/KnobsFX.vue";
 import Visualizer from "components/Visualizer.vue";
-import TestSlider from "components/CoolSlider.vue";
+
 
 export default defineComponent({
   name : 'SequencerComp',
