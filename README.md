@@ -6,7 +6,7 @@ Implementa dentro di sè vari banchi di suoni, facilmente espandibili, per accon
 
 Progetto del corso universitario di Advanced Coding Tools and Methodologies, tenuto dal professor F. Bruschi, a.a. 2023/2024, Politecnico di Milano.
 
-///METTI IMMAGINE
+///METTI IMMAGINE 
 
 ## Features
 Il cuore del sequencer implementa quattro righe di bottoni selezionabili, ognuna con un tipo di suono differente (kick, hithat, snare, openhat). 
