@@ -1,38 +1,38 @@
 # SQNCR
-SQNCR è un'applicazione web-based progettata per la creazione di sequenze musicali. Permette di combinare e arrangiare suoni e ritmi in modo intuitivo e creativo grazie anche al facile utilizzo su dispositivi touch-screen. 
-Ideale per musicisti, compositori e chiunque voglia esplorare il mondo della creazione musicale digitale.
-Sviluppato in Vue.js, framework di JavaScript implementando l'uso di Tone.js, libreria per la sintesi audio, permette all'utente di combinare e arrangiare suoni e ritmi in modo intuitivo e creativo.
-Implementa dentro di sè vari banchi di suoni, facilmente espandibili, per accontentare più gusti musicali possibili, essendo pensato come uno strumento versatile.
+SQNCR is a web-based application designed for creating musical sequences. It allows users to combine and arrange sounds and rhythms in an intuitive and creative way, also thanks to its ease of use on touch-screen devices. 
+Ideal for musicians, composers, and anyone looking to explore the world of digital music creation.
 
-Progetto del corso universitario di Advanced Coding Tools and Methodologies, tenuto dal professor F. Bruschi, a.a. 2023/2024, Politecnico di Milano.
+Developed in Vue.js, a JavaScript framework, it implements the use of Tone.js, a library for audio synthesis, enabling users to combine and arrange sounds and rhythms intuitively and creatively. It includes various sound banks, which can be easily expanded to cater to a wide range of musical tastes, making it a versatile tool.
+This project is part of the university course Advanced Coding Tools and Methodologies, taught by Professor F. Bruschi, academic year 2023/2024, Politecnico di Milano.
 
-///METTI IMMAGINE 
+
+![Screenshot 2024-06-04 191437](https://github.com/NicoGalaga/actam-2023-sequencer/assets/146447959/21f15c31-5007-47f8-8cd1-95daac2152c2)
+
 
 ## Features
-Il cuore del sequencer implementa quattro righe di bottoni selezionabili, ognuna con un tipo di suono differente (kick, hithat, snare, openhat). 
-è possibile selezionare il kit di suoni nel selettore nella parte sinistra dello strumento, dove si troveranno cinque tipi differenti di drumset. 
-Nel momento in cui l'utente premerà quindi il tasto "play" il sequencer comincerà il loop, producendo il suono dei tasti selezionati. Con il tasto "pausa", invece, la sequenza verrà interrotta, facendo ripartire al play successivo il sequencer dal suo primo step. 
-è possibile, inoltre, mutare un'intera riga del sequencer selezionando il tasto posizionato alla destra della relativa riga. 
-In questo modo l'utente avrà la massima flessibilità sui suoni che verranno riprodotti. 
+The heart of the sequencer implements four rows of selectable buttons, each with a different type of sound (kick, hi-hat, snare, open-hat). You can select the sound kit in the selector on the left side of the tool, where you will find five different types of drum sets. 
 
-è possibile inoltre cambiare la velocità di scorrimento regolando i BPM (nel range 30-240 BPM) e la percentuale di swing con i relativi slider posizionati nella parte sinistra dello schermo. 
-La modifica di questi parametri comporterà, non solo un cambiamento nel suono prodotto, ma anche la modifica dei relativi parametri nello schermo nero visibile nella parte a sinistra del sequencer. 
-Sempre nello schermo nero è possibile visualizzare la forma d'onda prodotta dal suono creato durante l'utilizzo del sequencer. 
-Con il secondo selettore verde sarà possibile cambiare la suddivisione della battuta. 
+When the user presses the "play" button, the sequencer will start the loop, producing the sound of the selected buttons. With the "pause" button, the sequence will be interrupted, and the sequencer will restart from its first step on the next play. 
+
+It is also possible to mute an entire row of the sequencer by selecting the button positioned to the right of the respective row. This way, the user will have maximum flexibility over the sounds that will be reproduced.
+
+Additionally, it is possible to change the scrolling speed by adjusting the BPM (within the range of 30-240 BPM) and the swing percentage with the corresponding sliders positioned on the left side of the screen. 
+
+Changing these parameters will not only alter the produced sound but also update the respective parameters on the black screen visible on the left side of the sequencer. The black screen also allows the user to view the waveform produced by the sound created during the use of the sequencer. 
+
+With the second green selector, it is possible to change the beat division.
 
 ### Effects
-Nella parte in basso a destra dello schermo si nota una grande sezione per gli effetti. Come già detto si possono applicare vari effetti al suono prodotto dallo strumento. 
-In particolare si possono modificare con quattro knob indipendenti la proporzione di wet signal che verrà processata dall'effetto. 
-I quattro effetti che possono essere regolati:
-* Picth: Il knob invia un comando di controllo all'algoritmo DSP. Questo comando regola la frequenza fondamentale del suono in base alla rotazione del knob.
-* Delay: Un effetto delay riproduce un segnale audio ritardato nel tempo, creando echi o raddoppi del suono originale. Più il ritardo è lungo, più l'eco è percettibile e crea un'atmosfera spaziale o ambigua.
-* Reverb: simula la risposta acustica di un ambiente, come una stanza, un auditorium o una caverna. In pratica, aggiunge copie ritardate e attenuate del segnale audio originale, imitando il modo in cui il suono rimbalza sulle superfici e si attenua nel tempo. 
-Questo crea un effetto di ampiezza e profondità, rendendo il suono più ricco e realistico.
-* Phaser: effetto di modulazione che crea un suono "sussurrante" o "pulsante" attraverso lo sfasamento graduale delle frequenze del segnale audio. Nella pratica, un filtro all-pass viene applicato al segnale, ritardando leggermente diverse frequenze, un oscillatore a bassa frequenza (LFO) modula la quantità di ritardo applicato dal filtro all-pass. Infine, il segnale audio viene modificato con le variazioni di fase create dal filtro all-pass, generando il tipico effetto. 
+In the lower right part of the screen, there is a large section dedicated to effects. As previously mentioned, various effects can be applied to the sound produced by the instrument. Specifically, the proportion of the wet signal that will be processed by the effect can be adjusted with four independent knobs. The four effects that can be adjusted are:
 
-Gli effetti sono applicabili in maniera indipendente ad ogni riga del sequencer, in modo tale che si possa modificare anche solo il suono di uno degli strumenti, portando all'utente una sempre maggiore flessibilità e versatilità d'utilizzo. 
-Per ogni sezione relativa allo strumento, si ha anche un piccolo tasto di reset, in modo tale che durante l'esecuzione non si debba necessariamente regolare a zero ogni knob, ma il tasto lo fa in automatico per l'utente, risultando comodo ma soprattutto veloce da configurare. 
+* **Pitch:** The knob sends a control command to the DSP algorithm. This command adjusts the fundamental frequency of the sound based on the rotation of the knob.
+* **Delay:** A delay effect reproduces an audio signal delayed in time, creating echoes or doubling the original sound. The longer the delay, the more perceptible the echo, creating a spatial or ambiguous atmosphere.
+* **Reverb:** Simulates the acoustic response of an environment, such as a room, auditorium, or cave. It adds delayed and attenuated copies of the original audio signal, imitating the way sound bounces off surfaces and fades over time. This creates a sense of width and depth, making the sound richer and more realistic.
+* **Phaser:** A modulation effect that creates a "whispering" or "pulsating" sound by gradually shifting the phases of the audio signal frequencies. An all-pass filter is applied to the signal, slightly delaying different frequencies, and a low-frequency oscillator (LFO) modulates the amount of delay applied by the all-pass filter. Finally, the audio signal is altered with the phase variations created by the all-pass filter, generating the characteristic phaser effect.
 
+The effects can be applied independently to each row of the sequencer, allowing the user to modify the sound of just one of the instruments, providing greater flexibility and versatility. 
+
+Each section related to the instrument also has a small reset button, so that during playback, the user does not have to manually set each knob back to zero. The reset button does this automatically, making it convenient and quick to configure.
 
 ## Framework & Dependencies
 The framework of choice is Vue. Developed using HTML, JavaScript and CSS.
@@ -42,7 +42,7 @@ The framework of choice is Vue. Developed using HTML, JavaScript and CSS.
 * Quasar - Web UI Framework
 
 ## Team
-* Niccolò Galante - descrizione di che abbiamo fatto - niccolo.galanteo@mail.polimi.it
+* Niccolò Galante - descrizione di che abbiamo fatto - niccolo.galante@mail.polimi.it
 * Flavio Ingenito - descrizione di che abbiamo fatto - flavio.ingenito@mail.polimi.it
 
 
