@@ -1,4 +1,3 @@
 module.exports = {
-  publicPath: process.env.NODE_ENV === 'production' ? '/' : '/',
-  filenameHashing: false
+  publicPath: process.env.NODE_ENV === 'production' ? '/actam-2023-sequencer/' : '/'
 }
